@@ -3,20 +3,21 @@
  */
 package org.neo4j.client.rest.impl;
 
-import java.util.Map;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.neo4j.client.PropertyContainer;
+import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.RestGraphDatabase;
 
 /**
  * @author Ricker
  * 
  */
-public abstract class PropertyContainerImpl implements PropertyContainer {
+public abstract class PropertyContainerImpl<D extends PropertyContainerData> implements PropertyContainer {
 
 	protected RestGraphDatabaseImpl graphDatabase;
-	
-	private boolean dirty;
+
+	private static Log log = LogFactory.getLog(PropertyContainerImpl.class);
 
 	public PropertyContainerImpl(RestGraphDatabaseImpl graphDatabase) {
 		this.graphDatabase = graphDatabase;
@@ -29,17 +30,17 @@ public abstract class PropertyContainerImpl implements PropertyContainer {
 
 	@Override
 	public boolean hasProperty(String key) {
-		return getData().containsKey(key);
+		return getData().getData().containsKey(key);
 	}
 
 	@Override
 	public Object getProperty(String key) {
-		return getData().get(key);
+		return getData().getData().get(key);
 	}
 
 	@Override
 	public Object getProperty(String key, Object defaultValue) {
-		Object val = getData().get(key);
+		Object val = getData().getData().get(key);
 		if (val != null) {
 			return val;
 		}
@@ -48,36 +49,32 @@ public abstract class PropertyContainerImpl implements PropertyContainer {
 
 	@Override
 	public void setProperty(String key, Object value) {
-		getData().put(key, value);
-		setDirty(true);
+		try {
+			graphDatabase.setProperty(this, key, value);
+			getData().getData().put(key, value);
+		} catch (RestClientException e) {
+			log.error("Could not set property", e);
+		}
 	}
 
 	@Override
 	public Object removeProperty(String key) {
-		setDirty(true);
-		return getData().remove(key);
+		try {
+			graphDatabase.removeProperty(this, key);
+			return getData().getData().remove(key);
+		} catch (RestClientException e) {
+			log.error("Could not remove property", e);
+		}
+		return null;
 	}
 
 	@Override
 	public Iterable<String> getPropertyKeys() {
-		return getData().keySet();
+		return getData().getData().keySet();
 	}
 
-	/**
-	 * Must not return null
-	 * 
-	 * @return
-	 */
-	protected abstract Map<String, Object> getData();
+	public abstract void setData(D data);
 
-	public boolean isDirty() {
-		return dirty;
-	}
-
-	public void setDirty(boolean dirty) {
-		this.dirty = dirty;
-	}
-	
-	
+	public abstract D getData();
 
 }

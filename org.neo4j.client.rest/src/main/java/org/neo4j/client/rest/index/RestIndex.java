@@ -1,7 +1,8 @@
 package org.neo4j.client.rest.index;
 
 import org.neo4j.client.index.Index;
+import org.neo4j.client.rest.RestPropertyContainer;
 
-public interface RestIndex extends Index {
+public interface RestIndex<T extends RestPropertyContainer> extends Index<T> {
 
 }

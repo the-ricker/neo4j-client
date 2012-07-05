@@ -25,9 +25,16 @@ public interface RestGraphDatabase extends GraphDatabase {
 	 */
 	public URI getURI();
 
+	/**
+	 * Is this actually useful or not?
+	 * @param autoload
+	 */
 	public void setAutoLoad(boolean autoload);
 	
 	public boolean isAutoLoad();
 
 	public RestTraverser traverse(RestTraversalDescription description, RestNode start) throws TraversalException;
+	
+
+	
 }

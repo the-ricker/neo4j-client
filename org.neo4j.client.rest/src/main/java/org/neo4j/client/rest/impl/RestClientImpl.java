@@ -3,16 +3,19 @@
  */
 package org.neo4j.client.rest.impl;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -35,16 +38,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author Ricker
  * 
  */
-public class LoaderImpl implements Loader {
+public class RestClientImpl implements RestClient {
 
-	private Log log = LogFactory.getLog(Loader.class);
+	private Log log = LogFactory.getLog(RestClient.class);
 
 	private ObjectMapper mapper;
 	private HttpClient httpclient;
 	private URI uri;
 	private DatabaseData data;
 
-	public LoaderImpl(URI uri) {
+	public RestClientImpl(URI uri) {
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 		schemeRegistry.register(new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
 		ClientConnectionManager cm = new PoolingClientConnectionManager(schemeRegistry);
@@ -186,19 +189,30 @@ public class LoaderImpl implements Loader {
 		try {
 			response = httpclient.execute(request);
 			EntityUtils.consume(response.getEntity());
-		} catch (Exception e) {
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_NO_CONTENT) {
+				// TODO get message property from JSON
+				throw new RestClientException(response.getStatusLine().getReasonPhrase());
+			}
+		} catch (IOException e) {
 			throw new RestClientException(e);
-		}
-		if (response.getStatusLine().getStatusCode() != 204) {
-			// TODO get message property from JSON
-			throw new RestClientException(response.getStatusLine().getReasonPhrase());
 		}
 	}
 
 	@Override
 	public void saveNode(NodeData node) throws RestClientException {
-		// TODO Auto-generated method stub
-
+		HttpPost request = new HttpPost(node.getSelf());
+		request.setHeader("Accept", "application/json");
+		request.setHeader("Content-Type", "application/json");
+		try {
+			request.setEntity(new StringEntity(mapper.writeValueAsString(node)));
+			HttpResponse response = httpclient.execute(request);
+			EntityUtils.consume(response.getEntity());
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+				throw new RestClientException(response.getStatusLine().getReasonPhrase());
+			}
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		}
 	}
 
 	@Override
@@ -209,13 +223,14 @@ public class LoaderImpl implements Loader {
 		try {
 			response = httpclient.execute(request);
 			EntityUtils.consume(response.getEntity());
-		} catch (Exception e) {
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_NO_CONTENT) {
+				// TODO get message property from JSON
+				throw new RestClientException(response.getStatusLine().getReasonPhrase());
+			}
+		} catch (IOException e) {
 			throw new RestClientException(e);
 		}
-		if (response.getStatusLine().getStatusCode() != 204) {
-			// TODO get message property from JSON
-			throw new RestClientException(response.getStatusLine().getReasonPhrase());
-		}
+
 	}
 
 	@Override
@@ -302,4 +317,34 @@ public class LoaderImpl implements Loader {
 		}
 	}
 
+	@Override
+	public void setProperty(PropertyContainerData container, String key, Object value) throws RestClientException {
+		try {
+			String path = container.getSelf() + "/property/" + key + "/" + value.toString();
+			HttpPut request = new HttpPut(path);
+			request.setHeader("Accept", "application/json");
+			HttpResponse response = httpclient.execute(request);
+			EntityUtils.consume(response.getEntity());
+			// TODO error code
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		}
+		 
+	}
+
+	@Override
+	public void removeProperty(PropertyContainerData container, String key) throws RestClientException {
+		try {
+			String path = container.getSelf() + "/property/" + key ;
+			HttpDelete request = new HttpDelete(path);
+			request.setHeader("Accept", "application/json");
+			HttpResponse response = httpclient.execute(request);
+			EntityUtils.consume(response.getEntity());
+			// TODO error code
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		}
+	}
+
+	
 }

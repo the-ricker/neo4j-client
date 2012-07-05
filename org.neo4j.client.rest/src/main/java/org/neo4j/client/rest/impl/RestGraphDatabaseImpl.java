@@ -15,6 +15,7 @@ import java.util.WeakHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4j.client.Node;
+import org.neo4j.client.PropertyContainer;
 import org.neo4j.client.RelationshipType;
 import org.neo4j.client.index.IndexManager;
 import org.neo4j.client.rest.RestClientException;
@@ -22,6 +23,7 @@ import org.neo4j.client.rest.RestGraphDatabase;
 import org.neo4j.client.rest.RestNode;
 import org.neo4j.client.rest.RestPath;
 import org.neo4j.client.rest.RestRelationship;
+import org.neo4j.client.rest.index.impl.RestIndexManagerImpl;
 import org.neo4j.client.rest.traversal.RestTraversalDescription;
 import org.neo4j.client.rest.traversal.RestTraverser;
 import org.neo4j.client.rest.traversal.impl.RestNodeTraverser;
@@ -34,7 +36,7 @@ import org.neo4j.client.traversal.TraversalException;
 /**
  * Responsible for implementing the interface and maintaining the cache.
  * <p>
- * The {@link Loader} is responsible for interacting with the database via HTTP.
+ * The {@link RestClient} is responsible for interacting with the database via HTTP.
  * 
  * @author Ricker
  * 
@@ -52,21 +54,23 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	private Map<Long, SoftReference<RestNodeImpl>> nodes;
 	private Map<Long, SoftReference<RestRelationshipImpl>> relationships;
 	private boolean autoload;
-	private Loader loader;
+	private RestClient loader;
+	private IndexManager indexManager;
 
 	public RestGraphDatabaseImpl() {
-		this(new LoaderImpl(null));
+		this(new RestClientImpl(null));
 	}
 
 	public RestGraphDatabaseImpl(URI uri) {
-		this(new LoaderImpl(uri));
+		this(new RestClientImpl(uri));
 	}
 
-	public RestGraphDatabaseImpl(Loader loader) {
+	public RestGraphDatabaseImpl(RestClient loader) {
 		this.loader = loader;
 		nodes = new WeakHashMap<Long, SoftReference<RestNodeImpl>>();
 		relationships = new WeakHashMap<Long, SoftReference<RestRelationshipImpl>>();
 		autoload = true;
+		indexManager = new RestIndexManagerImpl();
 	}
 
 	@Override
@@ -175,8 +179,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 
 	@Override
 	public IndexManager index() {
-		// TODO Auto-generated method stub
-		return null;
+		return indexManager;
 	}
 
 	@Override
@@ -197,7 +200,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 
 	public void loadNode(RestNodeImpl node) throws RestClientException {
 		NodeData nodeData = loader.loadNode(node.getId());
-		node.setNodeData(nodeData);
+		node.setData(nodeData);
 		node.clearRelationships();
 		if (nodeData != null) {
 			for (RelationshipData relationshipData : loader.loadNodeRelationships(nodeData)) {
@@ -207,7 +210,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 					relationship = new RestRelationshipImpl(this, relationshipData);
 					cacheRelationship(relationship);
 				} else {
-					relationship.setRelationshipData(relationshipData);
+					relationship.setData(relationshipData);
 				}
 				node.addRelationship(relationship);
 			}
@@ -215,24 +218,24 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	public void saveNode(RestNodeImpl node) throws RestClientException {
-		loader.saveNode(node.getNodeData());
+		loader.saveNode(node.getData());
 	}
 
 	public void deleteNode(RestNodeImpl node) throws RestClientException {
 		if (node != null && !node.isDeleted()) {
-			loader.deleteNode(node.getNodeData());
+			loader.deleteNode(node.getData());
 			nodes.remove(node.getId());
 		}
 	}
 
 	public void loadRelationship(RestRelationshipImpl relationship) throws RestClientException {
 		RelationshipData data = loader.loadRelationship(relationship.getId());
-		relationship.setRelationshipData(data);
+		relationship.setData(data);
 	}
 
 	public void deleteRelationship(RestRelationshipImpl relationship) throws RestClientException {
 		if (relationship != null && !relationship.isDeleted()) {
-			loader.deleteRelationship(relationship.getRelationshipData());
+			loader.deleteRelationship(relationship.getData());
 			RestNodeImpl node = lookupNode(relationship.getStartNodeId());
 			if (node != null && node.isLoaded()) {
 				node.removeRelationship(relationship);
@@ -246,13 +249,13 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	public void saveRelationship(RestRelationshipImpl relationship) throws RestClientException {
-		loader.saveRelationship(relationship.getRelationshipData());
+		loader.saveRelationship(relationship.getData());
 	}
 
 	public RestRelationshipImpl createRelationship(RestNodeImpl start, Node otherNode, RelationshipType type)
 			throws RestClientException {
 		RestNodeImpl end = lookupNode(otherNode.getId());
-		RelationshipData relationshipdata = loader.createRelationship(start.getNodeData(), end.getNodeData(),
+		RelationshipData relationshipdata = loader.createRelationship(start.getData(), end.getData(),
 				type.name());
 		RestRelationshipImpl relationship = new RestRelationshipImpl(this, relationshipdata);
 		start.addRelationship(relationship);
@@ -281,7 +284,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 			throws TraversalException {
 		try {
 			List<RestPath> paths = new ArrayList<RestPath>();
-			for (PathData pathData : loader.traversePaths(start.getNodeData(), description)) {
+			for (PathData pathData : loader.traversePaths(start.getData(), description)) {
 				paths.add(new RestPathImpl(this, pathData));
 			}
 			return new RestPathTraverser(paths);
@@ -294,7 +297,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 			throws TraversalException {
 		try {
 			List<RestRelationship> relationships = new ArrayList<RestRelationship>();
-			for (RelationshipData relData : loader.traverseRelationships(start.getNodeData(), description)) {
+			for (RelationshipData relData : loader.traverseRelationships(start.getData(), description)) {
 				relationships.add(getRelationship(relData));
 			}
 			return new RestRelationshipTraverser(relationships);
@@ -307,7 +310,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 			throws TraversalException {
 		try {
 			List<RestNode> nodes = new ArrayList<RestNode>();
-			for (NodeData nodeData : loader.traverseNodes(start.getNodeData(), description)) {
+			for (NodeData nodeData : loader.traverseNodes(start.getData(), description)) {
 				nodes.add(getNode(nodeData));
 			}
 			return new RestNodeTraverser(nodes);
@@ -319,16 +322,22 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	private RestNodeImpl getNode(NodeData nodeData) {
 		long id = PathUtil.getNodeId(nodeData.getSelf());
 		RestNodeImpl node = getNodeById(id, false);
-		node.setNodeData(nodeData);
+		node.setData(nodeData);
 		return node;
 	}
 
 	private RestRelationshipImpl getRelationship(RelationshipData relationshipData) {
 		long id = PathUtil.getRelationshipId(relationshipData.getSelf());
 		RestRelationshipImpl relationship = getRelationshipById(id, false);
-		relationship.setRelationshipData(relationshipData);
+		relationship.setData(relationshipData);
 		return relationship;
 	}
 	
+	public void setProperty(PropertyContainerImpl<?> container, String key, Object value) throws RestClientException {
+		loader.setProperty(container.getData(), key, value);
+	}
 	
+	public void removeProperty(PropertyContainerImpl<?> container, String key) throws RestClientException {
+		loader.removeProperty(container.getData(), key);
+	}
 }

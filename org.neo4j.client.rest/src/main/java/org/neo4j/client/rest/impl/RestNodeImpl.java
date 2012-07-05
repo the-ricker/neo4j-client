@@ -5,7 +5,6 @@ package org.neo4j.client.rest.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,7 +21,7 @@ import org.neo4j.client.rest.util.RelationshipUtil;
  * @author Ricker
  * 
  */
-public class RestNodeImpl extends PropertyContainerImpl implements RestNode {
+public class RestNodeImpl extends PropertyContainerImpl<NodeData> implements RestNode {
 
 	public final static long NO_ID = -1;
 
@@ -44,7 +43,7 @@ public class RestNodeImpl extends PropertyContainerImpl implements RestNode {
 	protected RestNodeImpl(RestGraphDatabaseImpl graphDatabase, NodeData data) {
 		super(graphDatabase);
 		relationships = new HashSet<RestRelationshipImpl>();
-		setNodeData(data);
+		setData(data);
 	}
 
 	@Override
@@ -173,7 +172,7 @@ public class RestNodeImpl extends PropertyContainerImpl implements RestNode {
 		try {
 			relationship = graphDatabase.createRelationship(this, otherNode, type);
 			relationships.add(relationship);
-			setDirty(true);
+			
 		} catch (RestClientException e) {
 			log.error("Failed to create relationship", e);
 		}
@@ -186,17 +185,7 @@ public class RestNodeImpl extends PropertyContainerImpl implements RestNode {
 		}
 	}
 
-	@Override
-	public void save() throws RestClientException {
-		checkDeleted();
-		graphDatabase.saveNode(this);
-		setDirty(false);
-	}
 
-	@Override
-	protected Map<String, Object> getData() {
-		return data.getData();
-	}
 
 	@Override
 	public String getSelf() {
@@ -204,26 +193,33 @@ public class RestNodeImpl extends PropertyContainerImpl implements RestNode {
 		return data.getSelf();
 	}
 
-	public void setNodeData(NodeData nodeData) {
+	@Override
+	public void setData(NodeData nodeData) {
 		this.data = nodeData;
 		if (data != null) {
 			id = PathUtil.getNodeId(data.getSelf());
 			deleted = false;
-			setDirty(false);
+
 		} else {
 			id = NO_ID;
 			deleted = true;
 		}
 	}
 
-	public NodeData getNodeData() {
+	@Override
+	public NodeData getData() {
 		return data;
 	}
 
 	@Override
-	public void load() throws RestClientException {
-		graphDatabase.loadNode(this);
-		setDirty(false);
+	public void refresh()  {
+		try {
+			graphDatabase.loadNode(this);
+		} catch (RestClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -235,7 +231,7 @@ public class RestNodeImpl extends PropertyContainerImpl implements RestNode {
 		this.deleted = deleted;
 	}
 
-	@Override
+	
 	public boolean isLoaded() {
 		return (data != null);
 	}

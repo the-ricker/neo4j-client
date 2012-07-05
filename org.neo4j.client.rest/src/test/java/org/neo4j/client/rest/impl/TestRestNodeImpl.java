@@ -47,11 +47,9 @@ public class TestRestNodeImpl {
 		RestNode node = db.createNode();
 		assertTrue(node.getId() > 0);
 		assertFalse(node.isDeleted());
-		assertFalse(node.isDirty());
+		
 		node.setProperty("foo", "bar");
-		assertTrue(node.isDirty());
-		node.save();
-		assertFalse(node.isDirty());
+
 		node.delete();
 		assertTrue(node.isDeleted());
 	}
@@ -75,9 +73,9 @@ public class TestRestNodeImpl {
 		assertEquals(start, relation.getStartNode());
 		assertEquals(end, relation.getEndNode());
 		assertEquals("test", relation.getType().name());
-		assertTrue(relation.isLoaded());
+
 		assertFalse(relation.isDeleted());
-		assertFalse(relation.isDirty());
+
 		/*
 		 * delete
 		 */

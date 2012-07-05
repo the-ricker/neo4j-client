@@ -20,7 +20,7 @@ import org.neo4j.client.rest.util.PathUtil;
  * @author Ricker
  * 
  */
-public class RestRelationshipImpl extends PropertyContainerImpl implements RestRelationship {
+public class RestRelationshipImpl extends PropertyContainerImpl<RelationshipData> implements RestRelationship {
 
 	private static Log log = LogFactory.getLog(RestRelationshipImpl.class); 
 	
@@ -35,7 +35,7 @@ public class RestRelationshipImpl extends PropertyContainerImpl implements RestR
 	 */
 	protected RestRelationshipImpl(RestGraphDatabaseImpl graphDatabase, RelationshipData data) {
 		super(graphDatabase);
-		setRelationshipData(data);
+		setData(data);
 		deleted = false;
 	}
 
@@ -47,7 +47,8 @@ public class RestRelationshipImpl extends PropertyContainerImpl implements RestR
 		deleted = false;
 	}
 	
-	public void setRelationshipData(RelationshipData data) {
+	@Override
+	public void setData(RelationshipData data) {
 		this.data = data;
 		if (data == null) {
 			deleted = true;
@@ -115,21 +116,13 @@ public class RestRelationshipImpl extends PropertyContainerImpl implements RestR
 	}
 
 
-	@Override
-	public void save() throws RestClientException {
-		graphDatabase.saveRelationship(this);
-		setDirty(false);
-	}
+	
 
 	@Override
 	public String getSelf() {
 		return data.getSelf();
 	}
 
-	@Override
-	protected Map<String, Object> getData() {
-		return data.getData();
-	}
 
 	@Override
 	public long getStartNodeId() {
@@ -142,9 +135,14 @@ public class RestRelationshipImpl extends PropertyContainerImpl implements RestR
 	}
 
 	@Override
-	public void load() throws RestClientException {
-		graphDatabase.loadRelationship(this);
-		setDirty(false);
+	public void refresh()  {
+		try {
+			graphDatabase.loadRelationship(this);
+		} catch (RestClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
@@ -152,16 +150,14 @@ public class RestRelationshipImpl extends PropertyContainerImpl implements RestR
 		return deleted;
 	}
 
-	@Override
-	public boolean isLoaded() {
-		return (data != null);
-	}
+
 
 	public void setDeleted(boolean b) {
 		this.deleted = b;
 	}
 
-	public RelationshipData getRelationshipData() {
+	@Override
+	public RelationshipData getData() {
 		return data;
 	}
 

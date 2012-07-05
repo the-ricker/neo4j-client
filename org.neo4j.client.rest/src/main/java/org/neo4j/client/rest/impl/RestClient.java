@@ -17,7 +17,7 @@ import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
  * @author Ricker
  * 
  */
-public interface Loader {
+public interface RestClient {
 
 	public URI getUri();
 
@@ -51,5 +51,9 @@ public interface Loader {
 
 	public Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description)
 			throws RestClientException;
+
+	public void setProperty(PropertyContainerData data, String key, Object value) throws RestClientException;
+
+	public void removeProperty(PropertyContainerData data, String key) throws RestClientException;
 
 }
