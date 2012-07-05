@@ -161,4 +161,8 @@ public class RestRelationshipImpl extends PropertyContainerImpl implements RestR
 		this.deleted = b;
 	}
 
+	public RelationshipData getRelationshipData() {
+		return data;
+	}
+
 }

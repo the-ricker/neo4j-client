@@ -45,11 +45,11 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	private Loader loader;
 
 	public RestGraphDatabaseImpl() {
-		this(new Loader(null));
+		this(new LoaderImpl(null));
 	}
 
 	public RestGraphDatabaseImpl(URI uri) {
-		this(new Loader(uri));
+		this(new LoaderImpl(uri));
 	}
 	
 	public RestGraphDatabaseImpl(Loader loader) {
@@ -177,7 +177,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	public void loadNode(RestNodeImpl node) throws RestClientException {
-		NodeData nodeData = loader.loadNodeData(node.getId());
+		NodeData nodeData = loader.loadNode(node.getId());
 		node.setNodeData(nodeData);
 		node.clearRelationships();
 		if (nodeData != null) {
@@ -196,24 +196,24 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	public void saveNode(RestNodeImpl node) throws RestClientException {
-		loader.saveNode(node);
+		loader.saveNode(node.getNodeData());
 	}
 
 	public void deleteNode(RestNodeImpl node) throws RestClientException {
 		if (node != null && !node.isDeleted()) {
-			loader.deleteNode(node);
+			loader.deleteNode(node.getNodeData());
 			nodes.remove(node.getId());
 		}
 	}
 
 	public void loadRelationship(RestRelationshipImpl relationship) throws RestClientException {
-		RelationshipData data = loader.loadRelationshipData(relationship.getId());
+		RelationshipData data = loader.loadRelationship(relationship.getId());
 		relationship.setRelationshipData(data);
 	}
 
 	public void deleteRelationship(RestRelationshipImpl relationship) throws RestClientException {
 		if (relationship != null && !relationship.isDeleted()) {
-			loader.deleteRelationship(relationship);
+			loader.deleteRelationship(relationship.getRelationshipData());
 			RestNodeImpl node = lookupNode(relationship.getStartNodeId());
 			if (node != null && node.isLoaded()) {
 				node.removeRelationship(relationship);
@@ -226,14 +226,14 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 		}
 	}
 
-	public void saveRelationship(RestRelationshipImpl relationship) {
-		loader.saveRelationship(relationship);
+	public void saveRelationship(RestRelationshipImpl relationship) throws RestClientException {
+		loader.saveRelationship(relationship.getRelationshipData());
 	}
 
 	public RestRelationshipImpl createRelationship(RestNodeImpl start, Node otherNode, RelationshipType type)
 			throws RestClientException {
 		RestNodeImpl end = lookupNode(otherNode.getId());
-		RelationshipData relationshipdata = loader.createRelationship(start, end, type);
+		RelationshipData relationshipdata = loader.createRelationship(start.getNodeData(), end.getNodeData(), type.name());
 		RestRelationshipImpl relationship = new RestRelationshipImpl(this, relationshipdata);
 		start.addRelationship(relationship);
 		end.addRelationship(relationship);
