@@ -13,12 +13,12 @@ import java.util.WeakHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4j.client.Node;
-import org.neo4j.client.Relationship;
 import org.neo4j.client.RelationshipType;
 import org.neo4j.client.index.IndexManager;
 import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.RestGraphDatabase;
 import org.neo4j.client.rest.RestNode;
+import org.neo4j.client.rest.RestRelationship;
 import org.neo4j.client.rest.util.PathUtil;
 import org.neo4j.client.traversal.rest.RestTraversalDescription;
 import org.neo4j.client.traversal.rest.RestTraverser;
@@ -53,7 +53,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	public RestGraphDatabaseImpl(URI uri) {
 		this(new LoaderImpl(uri));
 	}
-	
+
 	public RestGraphDatabaseImpl(Loader loader) {
 		this.loader = loader;
 		nodes = new WeakHashMap<Long, SoftReference<RestNodeImpl>>();
@@ -117,7 +117,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	@Override
-	public Relationship getRelationshipById(long id) {
+	public RestRelationship getRelationshipById(long id) {
 		RestRelationshipImpl relationship = lookupRelationship(id);
 		if (relationship == null) {
 			relationship = new RestRelationshipImpl(this, id);
@@ -235,7 +235,8 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	public RestRelationshipImpl createRelationship(RestNodeImpl start, Node otherNode, RelationshipType type)
 			throws RestClientException {
 		RestNodeImpl end = lookupNode(otherNode.getId());
-		RelationshipData relationshipdata = loader.createRelationship(start.getNodeData(), end.getNodeData(), type.name());
+		RelationshipData relationshipdata = loader.createRelationship(start.getNodeData(), end.getNodeData(),
+				type.name());
 		RestRelationshipImpl relationship = new RestRelationshipImpl(this, relationshipdata);
 		start.addRelationship(relationship);
 		end.addRelationship(relationship);
@@ -244,8 +245,15 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	@Override
-	public RestTraverser traverse(RestTraversalDescription description, RestNode... start) {
-		// TODO Auto-generated method stub
+	public RestTraverser traverse(RestTraversalDescription description, RestNode start) {
+		switch (description.getReturnType()) {
+		case NODE:
+			
+		case RELATIONSHIP:
+		case PATH:
+		case FULLPATH:
+
+		}
 		return null;
 	}
 

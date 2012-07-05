@@ -23,6 +23,7 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.util.PathUtil;
+import org.neo4j.client.traversal.rest.impl.TraversalDescriptionData;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -242,11 +243,13 @@ public class LoaderImpl implements Loader {
 		}
 	}
 	
-	public Collection<NodeData> traverseNodes(NodeData node) throws RestClientException {
+	public Collection<NodeData> traverseNodes(NodeData node, TraversalDescriptionData description) throws RestClientException {
 		try {
 			String path = node.getSelf() + "/traverse/node";
-			HttpGet request = new HttpGet(path);
+			HttpPost request = new HttpPost(path);
 			request.setHeader("Accept", "application/json");
+			request.setHeader("Content-Type", "application/json");
+			request.setEntity(new StringEntity(mapper.writeValueAsString(description)));
 			HttpResponse response = httpclient.execute(request);
 			Collection<NodeData> nodes = mapper.readValue(response.getEntity().getContent(),
 					new TypeReference<Collection<NodeData>>() {
@@ -258,13 +261,13 @@ public class LoaderImpl implements Loader {
 		}
 	}
 	
-	
- 
-	public Collection<RelationshipData> traverseRelationships(NodeData node) throws RestClientException {
+	public Collection<RelationshipData> traverseRelationships(NodeData node, TraversalDescriptionData description) throws RestClientException {
 		try {
 			String path = node.getSelf() + "/traverse/relationship";
-			HttpGet request = new HttpGet(path);
+			HttpPost request = new HttpPost(path);
 			request.setHeader("Accept", "application/json");
+			request.setHeader("Content-Type", "application/json");
+			request.setEntity(new StringEntity(mapper.writeValueAsString(description)));
 			HttpResponse response = httpclient.execute(request);
 			Collection<RelationshipData> relationships = mapper.readValue(response.getEntity().getContent(),
 					new TypeReference<Collection<RelationshipData>>() {
@@ -276,11 +279,13 @@ public class LoaderImpl implements Loader {
 		}
 	}
 	
-	public Collection<PathData> traversePaths(NodeData node) throws RestClientException {
+	public Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description) throws RestClientException {
 		try {
-			String path = node.getSelf() + "/traverse/relationship";
-			HttpGet request = new HttpGet(path);
+			String path = node.getSelf() + "/traverse/path";
+			HttpPost request = new HttpPost(path);
 			request.setHeader("Accept", "application/json");
+			request.setHeader("Content-Type", "application/json");
+			request.setEntity(new StringEntity(mapper.writeValueAsString(description)));
 			HttpResponse response = httpclient.execute(request);
 			Collection<PathData> paths = mapper.readValue(response.getEntity().getContent(),
 					new TypeReference<Collection<PathData>>() {
@@ -291,5 +296,7 @@ public class LoaderImpl implements Loader {
 			throw new RestClientException(e);
 		}
 	}
+	
+	
 	
 }

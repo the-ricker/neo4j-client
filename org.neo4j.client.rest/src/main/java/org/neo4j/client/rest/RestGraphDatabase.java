@@ -28,5 +28,5 @@ public interface RestGraphDatabase extends GraphDatabase {
 	
 	public boolean isAutoLoad();
 
-	public RestTraverser traverse(RestTraversalDescription description, RestNode... start);
+	public RestTraverser traverse(RestTraversalDescription description, RestNode start);
 }

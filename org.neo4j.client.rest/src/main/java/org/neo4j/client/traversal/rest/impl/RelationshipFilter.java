@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.neo4j.client.traversal.rest;
+package org.neo4j.client.traversal.rest.impl;
 
 import org.neo4j.client.Direction;
 import org.neo4j.client.RelationshipType;

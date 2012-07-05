@@ -82,5 +82,5 @@ public interface TraversalDescription {
 	 */
 	TraversalDescription breadthFirst();
 
-	Traverser traverse(Node... start);
+	Traverser traverse(Node start);
 }

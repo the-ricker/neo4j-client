@@ -17,6 +17,7 @@ import org.neo4j.client.traversal.Script;
 import org.neo4j.client.traversal.TraversalDescription;
 import org.neo4j.client.traversal.Traverser;
 import org.neo4j.client.traversal.Uniqueness;
+import org.neo4j.client.traversal.rest.impl.RelationshipFilter;
 
 /**
  * @author Ricker
@@ -42,8 +43,8 @@ public class RestTraversalDescription implements TraversalDescription {
 		this.pruneEvaluator = null;
 	}
 
-	private RestTraversalDescription(Uniqueness uniqueness, List<RelationshipFilter> relationships,
-			ReturnType returnType, Object returnFilter, Order order, int depth, Script pruneEvaluator) {
+	private RestTraversalDescription(Uniqueness uniqueness, List<RelationshipFilter> relationships, ReturnType returnType,
+			Object returnFilter, Order order, int depth, Script pruneEvaluator) {
 		this.uniqueness = uniqueness;
 		this.relationships = relationships;
 		this.returnType = returnType;
@@ -55,64 +56,64 @@ public class RestTraversalDescription implements TraversalDescription {
 
 	@Override
 	public TraversalDescription uniqueness(Uniqueness uniqueness) {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+			 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription relationships(RelationshipType type, Direction direction) {
-		relationships.add(new RelationshipFilter(type, direction));
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		relationships.add(new RelationshipFilter(type,direction));
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription returnType(ReturnType type) {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription returnFilter(ReturnFilter filter) {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription returnFilter(Script filter) {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription pruneEvaluator(Script evaluator) {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription maxDepth(int depth) {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, order, depth,
-				pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  order,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription depthFirst() {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, Order.DEPTH_FIRST,
-				depth, pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  Order.DEPTH_FIRST,  depth,  pruneEvaluator);
 	}
 
 	@Override
 	public TraversalDescription breadthFirst() {
-		return new RestTraversalDescription(uniqueness, relationships, returnType, returnFilter, Order.BREADTH_FIRST,
-				depth, pruneEvaluator);
+		return new RestTraversalDescription( uniqueness,  relationships,  returnType,
+				 returnFilter,  Order.BREADTH_FIRST,  depth,  pruneEvaluator);
 	}
 
 	@Override
-	public Traverser traverse(Node... start) {
-		if (start != null && start.length > 0 && start instanceof RestNode[]) {
-			return ((RestNode) start[0]).getGraphDatabase().traverse(this, (RestNode[]) start);
-		}
+	public Traverser traverse(Node start) {
+		if (start instanceof RestNode) {
+			return ((RestNode)start).getGraphDatabase().traverse(this, (RestNode)start);
+		} 
 		throw new IllegalArgumentException("Nodes should be instanceof RestNode");
 	}
 
@@ -144,4 +145,7 @@ public class RestTraversalDescription implements TraversalDescription {
 		return pruneEvaluator;
 	}
 
+	
+	
+	
 }
