@@ -19,6 +19,7 @@
  */
 package org.neo4j.client.traversal;
 
+import org.neo4j.client.Direction;
 import org.neo4j.client.Node;
 import org.neo4j.client.RelationshipType;
 
@@ -49,42 +50,37 @@ public interface TraversalDescription {
 
 	TraversalDescription uniqueness(Uniqueness uniqueness);
 
-	/**
-	 * Adds {@code type} to the list of relationship types to traverse. There's
-	 * no priority or order in which types to traverse.
-	 * 
-	 * @param type
-	 *            the {@link RelationshipType} to add to the list of types to
-	 *            traverse.
-	 * @return a new traversal description with the new modifications.
-	 */
-	TraversalDescription relationships(RelationshipType type);
+	TraversalDescription relationships(RelationshipType type, Direction direction);
 
 	TraversalDescription returnType(ReturnType type);
-	
-	TraversalDescription returnFilter(ReturnFilter filter);
-	
-	TraversalDescription returnFilter(Script filter);
-	
-	TraversalDescription pruneEvaluator(Script evaluator);
-	
-	TraversalDescription maxDepth(int depth);
-	
-	/**
-     * A convenience method for {@link #order(BranchOrderingPolicy)}
-     * where a "preorder depth first" selector is used. Positions which are
-     * deeper than the current position will be returned before positions on
-     * the same depth. See http://en.wikipedia.org/wiki/Depth-first_search
-     * @return a new traversal description with the new modifications.
-     */
-    TraversalDescription depthFirst();
 
-    /**
-     * A convenience method for {@link #order(BranchOrderingPolicy)}
-     * where a "preorder breadth first" selector is used. All positions with
-     * the same depth will be returned before advancing to the next depth.
-     * See http://en.wikipedia.org/wiki/Breadth-first_search
-     * @return a new traversal description with the new modifications.
-     */
-    TraversalDescription breadthFirst();
+	TraversalDescription returnFilter(ReturnFilter filter);
+
+	TraversalDescription returnFilter(Script filter);
+
+	TraversalDescription pruneEvaluator(Script evaluator);
+
+	TraversalDescription maxDepth(int depth);
+
+	/**
+	 * A convenience method for {@link #order(BranchOrderingPolicy)} where a
+	 * "preorder depth first" selector is used. Positions which are deeper than
+	 * the current position will be returned before positions on the same depth.
+	 * See http://en.wikipedia.org/wiki/Depth-first_search
+	 * 
+	 * @return a new traversal description with the new modifications.
+	 */
+	TraversalDescription depthFirst();
+
+	/**
+	 * A convenience method for {@link #order(BranchOrderingPolicy)} where a
+	 * "preorder breadth first" selector is used. All positions with the same
+	 * depth will be returned before advancing to the next depth. See
+	 * http://en.wikipedia.org/wiki/Breadth-first_search
+	 * 
+	 * @return a new traversal description with the new modifications.
+	 */
+	TraversalDescription breadthFirst();
+
+	Traverser traverse(Node... start);
 }

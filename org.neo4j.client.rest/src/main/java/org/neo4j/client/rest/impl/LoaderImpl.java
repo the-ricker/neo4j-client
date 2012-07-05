@@ -241,5 +241,55 @@ public class LoaderImpl implements Loader {
 			throw new RestClientException(e);
 		}
 	}
-
+	
+	public Collection<NodeData> traverseNodes(NodeData node) throws RestClientException {
+		try {
+			String path = node.getSelf() + "/traverse/node";
+			HttpGet request = new HttpGet(path);
+			request.setHeader("Accept", "application/json");
+			HttpResponse response = httpclient.execute(request);
+			Collection<NodeData> nodes = mapper.readValue(response.getEntity().getContent(),
+					new TypeReference<Collection<NodeData>>() {
+					});
+			EntityUtils.consume(response.getEntity());
+			return nodes;
+		} catch (Exception e) {
+			throw new RestClientException(e);
+		}
+	}
+	
+	
+ 
+	public Collection<RelationshipData> traverseRelationships(NodeData node) throws RestClientException {
+		try {
+			String path = node.getSelf() + "/traverse/relationship";
+			HttpGet request = new HttpGet(path);
+			request.setHeader("Accept", "application/json");
+			HttpResponse response = httpclient.execute(request);
+			Collection<RelationshipData> relationships = mapper.readValue(response.getEntity().getContent(),
+					new TypeReference<Collection<RelationshipData>>() {
+					});
+			EntityUtils.consume(response.getEntity());
+			return relationships;
+		} catch (Exception e) {
+			throw new RestClientException(e);
+		}
+	}
+	
+	public Collection<PathData> traversePaths(NodeData node) throws RestClientException {
+		try {
+			String path = node.getSelf() + "/traverse/relationship";
+			HttpGet request = new HttpGet(path);
+			request.setHeader("Accept", "application/json");
+			HttpResponse response = httpclient.execute(request);
+			Collection<PathData> paths = mapper.readValue(response.getEntity().getContent(),
+					new TypeReference<Collection<PathData>>() {
+					});
+			EntityUtils.consume(response.getEntity());
+			return paths;
+		} catch (Exception e) {
+			throw new RestClientException(e);
+		}
+	}
+	
 }

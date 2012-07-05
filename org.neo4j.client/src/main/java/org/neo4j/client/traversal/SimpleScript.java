@@ -5,12 +5,12 @@ package org.neo4j.client.traversal;
 
 /**
  * @author Ricker
- *
+ * 
  */
 public class SimpleScript implements Script {
-	
+
 	private String language;
-	
+
 	private String body;
 
 	public String getLanguage() {
@@ -28,7 +28,5 @@ public class SimpleScript implements Script {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	
-	
 
 }

@@ -6,6 +6,8 @@ package org.neo4j.client.rest;
 import java.net.URI;
 
 import org.neo4j.client.GraphDatabase;
+import org.neo4j.client.traversal.rest.RestTraversalDescription;
+import org.neo4j.client.traversal.rest.RestTraverser;
 
 /**
  * @author Ricker
@@ -26,5 +28,5 @@ public interface RestGraphDatabase extends GraphDatabase {
 	
 	public boolean isAutoLoad();
 
-	
+	public RestTraverser traverse(RestTraversalDescription description, RestNode... start);
 }

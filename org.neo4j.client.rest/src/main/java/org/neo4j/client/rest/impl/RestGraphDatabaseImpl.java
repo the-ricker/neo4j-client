@@ -20,6 +20,8 @@ import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.RestGraphDatabase;
 import org.neo4j.client.rest.RestNode;
 import org.neo4j.client.rest.util.PathUtil;
+import org.neo4j.client.traversal.rest.RestTraversalDescription;
+import org.neo4j.client.traversal.rest.RestTraverser;
 
 /**
  * Responsible for implementing the interface and maintaining the cache.
@@ -239,6 +241,12 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 		end.addRelationship(relationship);
 		cacheRelationship(relationship);
 		return relationship;
+	}
+
+	@Override
+	public RestTraverser traverse(RestTraversalDescription description, RestNode... start) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
