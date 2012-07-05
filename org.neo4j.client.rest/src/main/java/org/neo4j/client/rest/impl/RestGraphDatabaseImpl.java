@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -18,10 +20,16 @@ import org.neo4j.client.index.IndexManager;
 import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.RestGraphDatabase;
 import org.neo4j.client.rest.RestNode;
+import org.neo4j.client.rest.RestPath;
 import org.neo4j.client.rest.RestRelationship;
+import org.neo4j.client.rest.traversal.RestTraversalDescription;
+import org.neo4j.client.rest.traversal.RestTraverser;
+import org.neo4j.client.rest.traversal.impl.RestNodeTraverser;
+import org.neo4j.client.rest.traversal.impl.RestPathTraverser;
+import org.neo4j.client.rest.traversal.impl.RestRelationshipTraverser;
+import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
 import org.neo4j.client.rest.util.PathUtil;
-import org.neo4j.client.traversal.rest.RestTraversalDescription;
-import org.neo4j.client.traversal.rest.RestTraverser;
+import org.neo4j.client.traversal.TraversalException;
 
 /**
  * Responsible for implementing the interface and maintaining the cache.
@@ -89,10 +97,15 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 
 	@Override
 	public RestNode getNodeById(long id) {
+		return getNodeById(id, autoload);
+	}
+	
+
+	private RestNodeImpl getNodeById(long id, boolean load) {
 		RestNodeImpl node = lookupNode(id);
 		if (node == null) {
 			node = new RestNodeImpl(this, id);
-			if (autoload) {
+			if (load) {
 				try {
 					loadNode(node);
 				} catch (RestClientException e) {
@@ -118,10 +131,14 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 
 	@Override
 	public RestRelationship getRelationshipById(long id) {
+		return getRelationshipById(id, autoload);
+	}
+	
+	private RestRelationshipImpl getRelationshipById(long id, boolean load) {
 		RestRelationshipImpl relationship = lookupRelationship(id);
 		if (relationship == null) {
 			relationship = new RestRelationshipImpl(this, id);
-			if (autoload) {
+			if (load) {
 				try {
 					loadRelationship(relationship);
 				} catch (RestClientException e) {
@@ -245,16 +262,73 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	@Override
-	public RestTraverser traverse(RestTraversalDescription description, RestNode start) {
+	public RestTraverser traverse(RestTraversalDescription description, RestNode start) throws TraversalException {
+		RestNodeImpl impl = lookupNode(start.getId());
+		TraversalDescriptionData traversalData = new TraversalDescriptionData(description);
 		switch (description.getReturnType()) {
 		case NODE:
-			
+			return traverseNode(traversalData, impl);
 		case RELATIONSHIP:
+			return traverseRelationship(traversalData, impl);
 		case PATH:
 		case FULLPATH:
-
+			return traversePath(traversalData, impl);
 		}
-		return null;
+		throw new TraversalException("Unknown return type");
 	}
 
+	private RestTraverser traversePath(TraversalDescriptionData description, RestNodeImpl start)
+			throws TraversalException {
+		try {
+			List<RestPath> paths = new ArrayList<RestPath>();
+			for (PathData pathData : loader.traversePaths(start.getNodeData(), description)) {
+				paths.add(new RestPathImpl(this, pathData));
+			}
+			return new RestPathTraverser(paths);
+		} catch (RestClientException e) {
+			throw new TraversalException(e);
+		}
+	}
+
+	private RestTraverser traverseRelationship(TraversalDescriptionData description, RestNodeImpl start)
+			throws TraversalException {
+		try {
+			List<RestRelationship> relationships = new ArrayList<RestRelationship>();
+			for (RelationshipData relData : loader.traverseRelationships(start.getNodeData(), description)) {
+				relationships.add(getRelationship(relData));
+			}
+			return new RestRelationshipTraverser(relationships);
+		} catch (RestClientException e) {
+			throw new TraversalException(e);
+		}
+	}
+
+	private RestTraverser traverseNode(TraversalDescriptionData description, RestNodeImpl start)
+			throws TraversalException {
+		try {
+			List<RestNode> nodes = new ArrayList<RestNode>();
+			for (NodeData nodeData : loader.traverseNodes(start.getNodeData(), description)) {
+				nodes.add(getNode(nodeData));
+			}
+			return new RestNodeTraverser(nodes);
+		} catch (RestClientException e) {
+			throw new TraversalException(e);
+		}
+	}
+	
+	private RestNodeImpl getNode(NodeData nodeData) {
+		long id = PathUtil.getNodeId(nodeData.getSelf());
+		RestNodeImpl node = getNodeById(id, false);
+		node.setNodeData(nodeData);
+		return node;
+	}
+
+	private RestRelationshipImpl getRelationship(RelationshipData relationshipData) {
+		long id = PathUtil.getRelationshipId(relationshipData.getSelf());
+		RestRelationshipImpl relationship = getRelationshipById(id, false);
+		relationship.setRelationshipData(relationshipData);
+		return relationship;
+	}
+	
+	
 }

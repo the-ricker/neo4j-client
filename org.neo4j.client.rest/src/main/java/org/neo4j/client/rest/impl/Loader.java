@@ -7,6 +7,7 @@ import java.net.URI;
 import java.util.Collection;
 
 import org.neo4j.client.rest.RestClientException;
+import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
 
 /**
  * Handles the REST requests to the database server via HTTP. Most methods
@@ -21,8 +22,8 @@ public interface Loader {
 	public URI getUri();
 
 	public void setUri(URI uri);
-	
-	public long getReferenceNodeId()  throws RestClientException ;
+
+	public long getReferenceNodeId() throws RestClientException;
 
 	public NodeData createNode() throws RestClientException;
 
@@ -41,5 +42,14 @@ public interface Loader {
 	public void saveRelationship(RelationshipData relationship) throws RestClientException;
 
 	public void deleteRelationship(RelationshipData relationship) throws RestClientException;
+
+	public Collection<NodeData> traverseNodes(NodeData node, TraversalDescriptionData description)
+			throws RestClientException;
+
+	public Collection<RelationshipData> traverseRelationships(NodeData node, TraversalDescriptionData description)
+			throws RestClientException;
+
+	public Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description)
+			throws RestClientException;
 
 }

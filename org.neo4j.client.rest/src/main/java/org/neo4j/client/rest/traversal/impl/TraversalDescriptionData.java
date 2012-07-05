@@ -1,14 +1,14 @@
 /**
  * 
  */
-package org.neo4j.client.traversal.rest.impl;
+package org.neo4j.client.rest.traversal.impl;
 
 import java.util.List;
 
+import org.neo4j.client.rest.traversal.RestTraversalDescription;
 import org.neo4j.client.traversal.Order;
 import org.neo4j.client.traversal.Script;
 import org.neo4j.client.traversal.Uniqueness;
-import org.neo4j.client.traversal.rest.RestTraversalDescription;
 
 /**
  * @author Ricker

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.neo4j.client.traversal.rest.impl;
+package org.neo4j.client.rest.traversal.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import org.neo4j.client.Node;
 import org.neo4j.client.Path;
 import org.neo4j.client.Relationship;
 import org.neo4j.client.rest.RestRelationship;
-import org.neo4j.client.traversal.rest.RestTraverser;
+import org.neo4j.client.rest.traversal.RestTraverser;
 
 /**
  * @author Ricker

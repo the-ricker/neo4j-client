@@ -22,8 +22,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 import org.neo4j.client.rest.RestClientException;
+import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
 import org.neo4j.client.rest.util.PathUtil;
-import org.neo4j.client.traversal.rest.impl.TraversalDescriptionData;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -225,8 +225,7 @@ public class LoaderImpl implements Loader {
 	}
 
 	@Override
-	public RelationshipData createRelationship(NodeData start, NodeData end, String type)
-			throws RestClientException {
+	public RelationshipData createRelationship(NodeData start, NodeData end, String type) throws RestClientException {
 		HttpPost request = new HttpPost(start.getCreate_relationship());
 		request.setHeader("Accept", "application/json");
 		request.setHeader("Content-Type", "application/json");
@@ -242,8 +241,10 @@ public class LoaderImpl implements Loader {
 			throw new RestClientException(e);
 		}
 	}
-	
-	public Collection<NodeData> traverseNodes(NodeData node, TraversalDescriptionData description) throws RestClientException {
+
+	@Override
+	public Collection<NodeData> traverseNodes(NodeData node, TraversalDescriptionData description)
+			throws RestClientException {
 		try {
 			String path = node.getSelf() + "/traverse/node";
 			HttpPost request = new HttpPost(path);
@@ -260,8 +261,10 @@ public class LoaderImpl implements Loader {
 			throw new RestClientException(e);
 		}
 	}
-	
-	public Collection<RelationshipData> traverseRelationships(NodeData node, TraversalDescriptionData description) throws RestClientException {
+
+	@Override
+	public Collection<RelationshipData> traverseRelationships(NodeData node, TraversalDescriptionData description)
+			throws RestClientException {
 		try {
 			String path = node.getSelf() + "/traverse/relationship";
 			HttpPost request = new HttpPost(path);
@@ -278,8 +281,10 @@ public class LoaderImpl implements Loader {
 			throw new RestClientException(e);
 		}
 	}
-	
-	public Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description) throws RestClientException {
+
+	@Override
+	public Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description)
+			throws RestClientException {
 		try {
 			String path = node.getSelf() + "/traverse/path";
 			HttpPost request = new HttpPost(path);
@@ -296,7 +301,5 @@ public class LoaderImpl implements Loader {
 			throw new RestClientException(e);
 		}
 	}
-	
-	
-	
+
 }

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.neo4j.client.traversal.rest;
+package org.neo4j.client.rest.traversal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +10,15 @@ import org.neo4j.client.Direction;
 import org.neo4j.client.Node;
 import org.neo4j.client.RelationshipType;
 import org.neo4j.client.rest.RestNode;
+import org.neo4j.client.rest.traversal.impl.RelationshipFilter;
 import org.neo4j.client.traversal.Order;
 import org.neo4j.client.traversal.ReturnFilter;
 import org.neo4j.client.traversal.ReturnType;
 import org.neo4j.client.traversal.Script;
 import org.neo4j.client.traversal.TraversalDescription;
+import org.neo4j.client.traversal.TraversalException;
 import org.neo4j.client.traversal.Traverser;
 import org.neo4j.client.traversal.Uniqueness;
-import org.neo4j.client.traversal.rest.impl.RelationshipFilter;
 
 /**
  * @author Ricker
@@ -110,7 +111,7 @@ public class RestTraversalDescription implements TraversalDescription {
 	}
 
 	@Override
-	public Traverser traverse(Node start) {
+	public Traverser traverse(Node start) throws TraversalException {
 		if (start instanceof RestNode) {
 			return ((RestNode)start).getGraphDatabase().traverse(this, (RestNode)start);
 		} 
