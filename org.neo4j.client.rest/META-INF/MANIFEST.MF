@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.neo4j.client.rest
+Bundle-SymbolicName: org.neo4j.client.rest
+Bundle-Version: 1.0.0.SNAPSHOT
+Export-Package: org.neo4j.client.rest;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client.traversal,org.neo4j.client,org.neo4j.client.rest.traversal",
+ org.neo4j.client.rest.index;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client.index",
+ org.neo4j.client.rest.traversal;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client.rest,org.neo4j.client.traversal,org.neo4j.client",
+ org.neo4j.client.rest.util;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client.rest,org.neo4j.client"
+Import-Package: com.fasterxml.jackson.annotation;version="[2.0,3)",
+ com.fasterxml.jackson.core.type;version="[2.0,3)",
+ com.fasterxml.jackson.databind;version="[2.0,3)",
+ org.apache.commons.logging,
+ org.apache.http;version="[4.2,5)",
+ org.apache.http.client;version="[4.2,5)",
+ org.apache.http.client.methods;version="[4.2,5)",
+ org.apache.http.conn;version="[4.2,5)",
+ org.apache.http.conn.scheme;version="[4.2,5)",
+ org.apache.http.entity;version="[4.2,5)",
+ org.apache.http.impl.client;version="[4.2,5)",
+ org.apache.http.impl.conn;version="[4.2,5)",
+ org.apache.http.util;version="[4.2,5)",
+ org.neo4j.client;version="[1.0,2)",
+ org.neo4j.client.index;version="[1.0,2)",
+ org.neo4j.client.rest.util;version="[1.0,2)",
+ org.neo4j.client.traversal;version="[1.0,2)"
+

@@ -49,7 +49,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-
+						<Bundle-SymbolicName>org.neo4j.client.rest</Bundle-SymbolicName>
 					</instructions>
 				</configuration>
 			</plugin>

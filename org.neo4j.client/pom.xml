@@ -17,7 +17,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-
+						<Bundle-SymbolicName>org.neo4j.client</Bundle-SymbolicName>
 					</instructions>
 				</configuration>
 			</plugin>

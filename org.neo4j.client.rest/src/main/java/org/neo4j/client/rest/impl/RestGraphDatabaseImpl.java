@@ -70,7 +70,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 		nodes = new WeakHashMap<Long, SoftReference<RestNodeImpl>>();
 		relationships = new WeakHashMap<Long, SoftReference<RestRelationshipImpl>>();
 		autoload = true;
-		indexManager = new RestIndexManagerImpl();
+		indexManager = new RestIndexManagerImpl(loader);
 	}
 
 	@Override
