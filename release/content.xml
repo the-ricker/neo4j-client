@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?metadataRepository version='1.1.0'?>
-<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository - metadata' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
+<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository/ - metadata' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1342118842451'/>
+    <property name='p2.timestamp' value='1342119311399'/>
     <property name='p2.compressed' value='false'/>
   </properties>
   <units size='8'>
@@ -334,12 +334,10 @@
       <provides size='1'>
         <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.feature.feature.group' version='4.2.1'/>
       </provides>
-      <requires size='9'>
+      <requires size='7'>
         <required namespace='org.eclipse.equinox.p2.iu' name='jackson-annotations' range='[2.0.4,2.0.4]'/>
         <required namespace='org.eclipse.equinox.p2.iu' name='jackson-core' range='[2.0.4,2.0.4]'/>
         <required namespace='org.eclipse.equinox.p2.iu' name='jackson-databind' range='[2.0.4,2.0.4]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='net.sf.ehcache.core' range='[2.5.2,2.5.2]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='net.spy.memcached' range='[2.8.1,2.8.1]'/>
         <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' range='[1.1.1,1.1.1]'/>
         <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.httpcore' range='[4.2.1,4.2.1]'/>
         <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.httpclient' range='[4.2.1,4.2.1]'/>
