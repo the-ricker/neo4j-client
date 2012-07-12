@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
-<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
+<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1342116829837'/>
+    <property name='p2.timestamp' value='1342118654704'/>
     <property name='p2.compressed' value='false'/>
   </properties>
   <mappings size='3'>
@@ -15,7 +15,7 @@
       <properties size='4'>
         <property name='artifact.size' value='3404'/>
         <property name='download.size' value='3404'/>
-        <property name='download.md5' value='6622ad6664a04feb693edab1b970c15d'/>
+        <property name='download.md5' value='26771b8d8cdee56fe3107cb0c368868d'/>
         <property name='download.contentType' value='application/zip'/>
       </properties>
     </artifact>
@@ -56,9 +56,9 @@
     </artifact>
     <artifact classifier='osgi.bundle' id='org.apache.commons.logging' version='1.1.1'>
       <properties size='3'>
-        <property name='artifact.size' value='54028'/>
-        <property name='download.size' value='54028'/>
-        <property name='download.md5' value='8ebc602c49b107e687f9a34b059e1175'/>
+        <property name='artifact.size' value='54063'/>
+        <property name='download.size' value='54063'/>
+        <property name='download.md5' value='4d9b47d893d6f580ae0a0ec5e4e28f09'/>
       </properties>
     </artifact>
   </artifacts>
