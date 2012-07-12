@@ -1,0 +1,363 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?metadataRepository version='1.1.0'?>
+<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository/ - metadata' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
+  <properties size='2'>
+    <property name='p2.timestamp' value='1342116829852'/>
+    <property name='p2.compressed' value='false'/>
+  </properties>
+  <units size='8'>
+    <unit id='jackson-databind' version='2.0.4' singleton='false'>
+      <update id='jackson-databind' range='[0.0.0,2.0.4)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='jackson-databind'/>
+        <property name='org.eclipse.equinox.p2.description' value='General data-binding functionality for Jackson: works on core streaming API'/>
+        <property name='org.eclipse.equinox.p2.provider' value='fasterml.com'/>
+        <property name='org.eclipse.equinox.p2.doc.url' value='http://fasterxml.com'/>
+      </properties>
+      <provides size='22'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='jackson-databind' version='2.0.4'/>
+        <provided namespace='osgi.bundle' name='jackson-databind' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.annotation' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.cfg' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.deser' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.deser.impl' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.deser.std' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.exc' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.ext' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.introspect' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.jsonschema' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.jsontype' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.jsontype.impl' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.module' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.node' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.ser' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.ser.impl' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.ser.std' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.type' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.databind.util' version='2.0.4'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='15'>
+        <required namespace='java.package' name='com.fasterxml.jackson.annotation' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core.base' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core.format' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core.io' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core.json' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core.type' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='com.fasterxml.jackson.core.util' range='[2.0.0,3.0.0)'/>
+        <required namespace='java.package' name='javax.xml.datatype' range='0.0.0'/>
+        <required namespace='java.package' name='javax.xml.namespace' range='0.0.0'/>
+        <required namespace='java.package' name='javax.xml.parsers' range='0.0.0'/>
+        <required namespace='java.package' name='org.w3c.dom' range='0.0.0'/>
+        <required namespace='java.package' name='org.w3c.dom.bootstrap' range='0.0.0'/>
+        <required namespace='java.package' name='org.w3c.dom.ls' range='0.0.0'/>
+        <required namespace='java.package' name='org.xml.sax' range='0.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='jackson-databind' version='2.0.4'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: jackson-databind&#xA;Bundle-Version: 2.0.4&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.commons.logging' version='1.1.1' singleton='false'>
+      <update id='org.apache.commons.logging' range='[0.0.0,1.1.1)' severity='0'/>
+      <properties size='2'>
+        <property name='org.eclipse.equinox.p2.name' value='org.apache.commons.logging'/>
+        <property name='org.eclipse.equinox.p2.description' value='Project for assembling the OSGi dependencies of a REST client'/>
+      </properties>
+      <provides size='5'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' version='1.1.1'/>
+        <provided namespace='osgi.bundle' name='org.apache.commons.logging' version='1.1.1'/>
+        <provided namespace='java.package' name='org.apache.commons.logging' version='1.1.1'/>
+        <provided namespace='java.package' name='org.apache.commons.logging.impl' version='1.1.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='4'>
+        <required namespace='java.package' name='javax.servlet' range='0.0.0'/>
+        <required namespace='java.package' name='org.apache.avalon.framework.logger' range='0.0.0'/>
+        <required namespace='java.package' name='org.apache.log' range='0.0.0'/>
+        <required namespace='java.package' name='org.apache.log4j' range='0.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.commons.logging' version='1.1.1'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.commons.logging&#xA;Bundle-Version: 1.1.1&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.httpcomponents.httpclient' version='4.2.1' singleton='false'>
+      <update id='org.apache.httpcomponents.httpclient' range='[0.0.0,4.2.1)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Apache HttpClient OSGi bundle'/>
+        <property name='org.eclipse.equinox.p2.description' value='HttpComponents Client (OSGi bundle)'/>
+        <property name='org.eclipse.equinox.p2.provider' value='The Apache Software Foundation'/>
+        <property name='org.eclipse.equinox.p2.doc.url' value='http://www.apache.org/'/>
+      </properties>
+      <provides size='32'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.httpclient' version='4.2.1'/>
+        <provided namespace='osgi.bundle' name='org.apache.httpcomponents.httpclient' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.auth.params' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.auth' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.cookie.params' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.cookie' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.conn.params' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.conn.routing' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.conn' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.conn.scheme' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.conn.ssl' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.conn.util' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.fluent' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.entity' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.utils' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.protocol' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.params' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.cache' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.client.methods' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.entity.mime' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.entity.mime.content' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.auth' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.cookie' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.conn' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.conn.tsccm.doc-files' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.conn.tsccm' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.client' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.client.cache.memcached' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.client.cache.ehcache' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.client.cache' version='4.2.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='21'>
+        <required namespace='java.package' name='javax.crypto' range='0.0.0'/>
+        <required namespace='java.package' name='javax.crypto.spec' range='0.0.0'/>
+        <required namespace='java.package' name='javax.net.ssl' range='0.0.0'/>
+        <required namespace='java.package' name='javax.security.auth.x500' range='0.0.0'/>
+        <required namespace='java.package' name='net.sf.ehcache' range='0.0.0' optional='true' greedy='false'/>
+        <required namespace='java.package' name='net.spy.memcached' range='0.0.0' optional='true' greedy='false'/>
+        <required namespace='java.package' name='org.apache.commons.logging' range='1.1.1'/>
+        <required namespace='java.package' name='org.apache.http' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.concurrent' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.entity' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.impl' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.impl.entity' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.impl.io' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.impl.pool' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.io' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.message' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.params' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.pool' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.protocol' range='4.2.1'/>
+        <required namespace='java.package' name='org.apache.http.util' range='4.2.1'/>
+        <required namespace='java.package' name='org.ietf.jgss' range='0.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.httpcomponents.httpclient' version='4.2.1'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.httpcomponents.httpclient&#xA;Bundle-Version: 4.2.1&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='jackson-core' version='2.0.4' singleton='false'>
+      <update id='jackson-core' range='[0.0.0,2.0.4)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Jackson-core'/>
+        <property name='org.eclipse.equinox.p2.description' value='Core Jackson abstractions, basic JSON streaming API implementation'/>
+        <property name='org.eclipse.equinox.p2.provider' value='fasterml.com'/>
+        <property name='org.eclipse.equinox.p2.doc.url' value='http://fasterxml.com'/>
+      </properties>
+      <provides size='11'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='jackson-core' version='2.0.4'/>
+        <provided namespace='osgi.bundle' name='jackson-core' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.base' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.format' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.io' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.json' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.sym' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.type' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.core.util' version='2.0.4'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='jackson-core' version='2.0.4'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: jackson-core&#xA;Bundle-Version: 2.0.4&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='jackson-annotations' version='2.0.4' singleton='false'>
+      <update id='jackson-annotations' range='[0.0.0,2.0.4)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Jackson-annotations'/>
+        <property name='org.eclipse.equinox.p2.description' value='Core annotations used for value types, used by Jackson databinding package.'/>
+        <property name='org.eclipse.equinox.p2.provider' value='FasterXML'/>
+        <property name='org.eclipse.equinox.p2.doc.url' value='http://wiki.fasterxml.com/JacksonHome'/>
+      </properties>
+      <provides size='4'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='jackson-annotations' version='2.0.4'/>
+        <provided namespace='osgi.bundle' name='jackson-annotations' version='2.0.4'/>
+        <provided namespace='java.package' name='com.fasterxml.jackson.annotation' version='2.0.4'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='jackson-annotations' version='2.0.4'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: jackson-annotations&#xA;Bundle-Version: 2.0.4&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.httpcomponents.feature.feature.jar' version='4.2.1'>
+      <properties size='3'>
+        <property name='org.eclipse.equinox.p2.name' value='Apache Http Components Feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.feature.feature.jar' version='4.2.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.apache.httpcomponents.feature' version='4.2.1'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.apache.httpcomponents.feature' version='4.2.1'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
+    <unit id='org.apache.httpcomponents.httpcore' version='4.2.1' singleton='false'>
+      <update id='org.apache.httpcomponents.httpcore' range='[0.0.0,4.2.1)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Apache HttpCore OSGi bundle'/>
+        <property name='org.eclipse.equinox.p2.description' value='HttpComponents Core (OSGi bundle)'/>
+        <property name='org.eclipse.equinox.p2.provider' value='The Apache Software Foundation'/>
+        <property name='org.eclipse.equinox.p2.doc.url' value='http://www.apache.org/'/>
+      </properties>
+      <provides size='30'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.httpcore' version='4.2.1'/>
+        <provided namespace='osgi.bundle' name='org.apache.httpcomponents.httpcore' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.entity' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.protocol' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.entity' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.util' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.nio.ssl' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.reactor.ssl' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.protocol' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.pool' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.nio.pool' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.message' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.io' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.nio' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.io' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.pool' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.params' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.annotation' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.nio.codecs' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.nio.reactor' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.impl.pool' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.params' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.reactor' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.nio.entity' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.util' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http' version='4.2.1'/>
+        <provided namespace='java.package' name='org.apache.http.concurrent' version='4.2.1'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='java.package' name='javax.net.ssl' range='0.0.0'/>
+      </requires>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.apache.httpcomponents.httpcore' version='4.2.1'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.apache.httpcomponents.httpcore&#xA;Bundle-Version: 4.2.1&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.apache.httpcomponents.feature.feature.group' version='4.2.1' singleton='false'>
+      <update id='org.apache.httpcomponents.feature.feature.group' range='[0.0.0,4.2.1)' severity='0'/>
+      <properties size='4'>
+        <property name='org.eclipse.equinox.p2.name' value='Apache Http Components Feature'/>
+        <property name='org.eclipse.equinox.p2.description' value='[Enter Feature Description here.]'/>
+        <property name='org.eclipse.equinox.p2.description.url' value='http://www.example.com/description'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.feature.feature.group' version='4.2.1'/>
+      </provides>
+      <requires size='9'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='jackson-annotations' range='[2.0.4,2.0.4]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='jackson-core' range='[2.0.4,2.0.4]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='jackson-databind' range='[2.0.4,2.0.4]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='net.sf.ehcache.core' range='[2.5.2,2.5.2]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='net.spy.memcached' range='[2.8.1,2.8.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.commons.logging' range='[1.1.1,1.1.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.httpcore' range='[4.2.1,4.2.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.httpclient' range='[4.2.1,4.2.1]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.apache.httpcomponents.feature.feature.jar' range='[4.2.1,4.2.1]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='http://www.example.com/license' url='http://www.example.com/license'>
+          [Enter License Description here.]
+        </license>
+      </licenses>
+      <copyright uri='http://www.example.com/copyright' url='http://www.example.com/copyright'>
+        [Enter Copyright Description here.]
+      </copyright>
+    </unit>
+  </units>
+</repository>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
+  <properties size='2'>
+    <property name='p2.timestamp' value='1342116829837'/>
+    <property name='p2.compressed' value='false'/>
+  </properties>
+  <mappings size='3'>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='7'>
+    <artifact classifier='org.eclipse.update.feature' id='org.apache.httpcomponents.feature' version='4.2.1'>
+      <properties size='4'>
+        <property name='artifact.size' value='3404'/>
+        <property name='download.size' value='3404'/>
+        <property name='download.md5' value='6622ad6664a04feb693edab1b970c15d'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='jackson-core' version='2.0.4'>
+      <properties size='3'>
+        <property name='artifact.size' value='193677'/>
+        <property name='download.size' value='193677'/>
+        <property name='download.md5' value='83342eaf63b2967115f52028a8c158cc'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.apache.httpcomponents.httpclient' version='4.2.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='820338'/>
+        <property name='download.size' value='820338'/>
+        <property name='download.md5' value='5c15f523427a8973a436b0f816e03234'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='jackson-databind' version='2.0.4'>
+      <properties size='3'>
+        <property name='artifact.size' value='847126'/>
+        <property name='download.size' value='847126'/>
+        <property name='download.md5' value='f31b6bf90afbfc33fd7ab3f18485bec6'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.apache.httpcomponents.httpcore' version='4.2.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='517184'/>
+        <property name='download.size' value='517184'/>
+        <property name='download.md5' value='9229fd8553a14513aee98fb7e6e4edcd'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='jackson-annotations' version='2.0.4'>
+      <properties size='3'>
+        <property name='artifact.size' value='33528'/>
+        <property name='download.size' value='33528'/>
+        <property name='download.md5' value='80615627d10d83a6904e46cff2c1637f'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.apache.commons.logging' version='1.1.1'>
+      <properties size='3'>
+        <property name='artifact.size' value='54028'/>
+        <property name='download.size' value='54028'/>
+        <property name='download.md5' value='8ebc602c49b107e687f9a34b059e1175'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>
