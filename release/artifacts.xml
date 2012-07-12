@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?artifactRepository version='1.1.0'?>
-<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository/ - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
+<repository name='file:/C:/dev/workspaces/workspace-neo4j-dep/httpcomponents-eclipse/httpcomponents-p2/target/repository - artifacts' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1342118654704'/>
+    <property name='p2.timestamp' value='1342118842451'/>
     <property name='p2.compressed' value='false'/>
   </properties>
   <mappings size='3'>
