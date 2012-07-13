@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Neo4j Client
+Bundle-SymbolicName: org.neo4j.client
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.neo4j.client,
+ org.neo4j.client.index,
+ org.neo4j.client.traversal

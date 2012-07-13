@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.apache.httpcomponents.feature-4.2.1.jar" id="org.apache.httpcomponents.feature" version="4.2.1">
+      <category name="org.neo4j.category"/>
+   </feature>
+   <category-def name="org.neo4j.category" label="Neo4j">
+      <description>
+         Neo4j plugins
+      </description>
+   </category-def>
+</site>

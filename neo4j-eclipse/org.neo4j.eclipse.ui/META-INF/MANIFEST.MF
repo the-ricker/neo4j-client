@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Neo4j Eclipse UI
+Bundle-SymbolicName: org.neo4j.eclipse.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Export-Package: org.neo4j.eclipse.ui.parts
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.neo4j.client.rest,
+ javax.inject,
+ org.eclipse.swt,
+ org.eclipse.jface,
+ org.eclipse.e4.core.di,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.e4.ui.di
+

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/descriptor/basic" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmi:id="_8LJFgMxfEeGVQ8E1B7H_Pg">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_uUELgMxgEeGVQ8E1B7H_Pg" parentElementId="org.eclipse.e4.legacy.ide.application">
+    <elements xsi:type="basic:PartDescriptor" xmi:id="_klQeQMzsEeGVQ8E1B7H_Pg" elementId="org.neo4j.eclipse.ui.parts.Neo4jDbViewer" label="Neo4j Database Viewer" iconURI="platform:/plugin/org.neo4j.eclipse.ui/icons/obj16/neo-16.png" allowMultiple="true" category="org.neo4j.eclipse.ui" closeable="true" contributionURI="bundleclass://org.neo4j.eclipse.ui/org.neo4j.eclipse.ui.parts.Neo4jDbViewer">
+      <toolbar xmi:id="_pxQCAMzsEeGVQ8E1B7H_Pg" elementId="org.neo4j.eclipse.ui.toolbar.0"/>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

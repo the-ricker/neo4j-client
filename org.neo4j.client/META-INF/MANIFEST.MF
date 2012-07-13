@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: org.neo4j.client
-Bundle-SymbolicName: org.neo4j.client
-Bundle-Version: 1.0.0.SNAPSHOT
-Export-Package: org.neo4j.client;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client.index",
- org.neo4j.client.index;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client",
- org.neo4j.client.traversal;version="1.0.0.SNAPSHOT";uses:="org.neo4j.client"
-
