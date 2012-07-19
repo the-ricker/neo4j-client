@@ -6,7 +6,7 @@ package org.neo4j.client.rest.index.impl;
 import org.neo4j.client.GraphDatabase;
 import org.neo4j.client.index.IndexHits;
 import org.neo4j.client.rest.RestPropertyContainer;
-import org.neo4j.client.rest.impl.RestGraphDatabaseImpl;
+import org.neo4j.client.rest.client.IndexData;
 import org.neo4j.client.rest.index.RestIndex;
 
 /**
@@ -15,12 +15,14 @@ import org.neo4j.client.rest.index.RestIndex;
  */
 public class RestIndexImpl<T extends RestPropertyContainer> implements RestIndex<T> {
 
-	private RestGraphDatabaseImpl db;
+	private RestIndexManagerImpl manager;
 	private String name;
+	private IndexData data;
 	
-	public RestIndexImpl(RestGraphDatabaseImpl db, String name) {
-		this.db = db;
+	public RestIndexImpl(RestIndexManagerImpl manager, String name, IndexData data) {
+		this.manager = manager;
 		this.name = name;
+		this.data = data;
 	}
 	
 	@Override
@@ -90,19 +92,17 @@ public class RestIndexImpl<T extends RestPropertyContainer> implements RestIndex
 
 	@Override
 	public boolean isWriteable() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public GraphDatabase getGraphDatabase() {
-		return db;
+		return manager.getDatabase();
 	}
 
 	@Override
 	public String getSelf() {
-		// TODO Auto-generated method stub
-		return null;
+		return data.getSelf();
 	}
 
 }

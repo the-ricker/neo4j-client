@@ -74,7 +74,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 		nodes = new WeakHashMap<Long, SoftReference<RestNodeImpl>>();
 		relationships = new WeakHashMap<Long, SoftReference<RestRelationshipImpl>>();
 		autoload = true;
-		indexManager = new RestIndexManagerImpl(loader);
+		indexManager = new RestIndexManagerImpl(this,loader);
 	}
 
 	@Override
@@ -203,11 +203,11 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	public void loadNode(RestNodeImpl node) throws RestClientException {
-		NodeData nodeData = loader.loadNode(node.getId());
+		NodeData nodeData = loader.getNode(node.getId());
 		node.setData(nodeData);
 		node.clearRelationships();
 		if (nodeData != null) {
-			for (RelationshipData relationshipData : loader.loadNodeRelationships(nodeData)) {
+			for (RelationshipData relationshipData : loader.getNodeRelationships(nodeData)) {
 				long id = PathUtil.getRelationshipId(relationshipData.getSelf());
 				RestRelationshipImpl relationship = lookupRelationship(id);
 				if (relationship == null) {
@@ -233,7 +233,7 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 
 	public void loadRelationship(RestRelationshipImpl relationship) throws RestClientException {
-		RelationshipData data = loader.loadRelationship(relationship.getId());
+		RelationshipData data = loader.getRelationship(relationship.getId());
 		relationship.setData(data);
 	}
 
@@ -342,6 +342,6 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 	}
 	
 	public void removeProperty(PropertyContainerImpl<?> container, String key) throws RestClientException {
-		loader.removeProperty(container.getData(), key);
+		loader.deleteProperty(container.getData(), key);
 	}
 }

@@ -5,6 +5,7 @@ package org.neo4j.client.rest.client;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Map;
 
 import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
@@ -28,11 +29,11 @@ public interface RestClient {
 
 	public RelationshipData createRelationship(NodeData start, NodeData end, String type) throws RestClientException;
 
-	public NodeData loadNode(long nodeId) throws RestClientException;
+	public NodeData getNode(long nodeId) throws RestClientException;
 
-	public Collection<RelationshipData> loadNodeRelationships(NodeData nodeData) throws RestClientException;
+	public Collection<RelationshipData> getNodeRelationships(NodeData nodeData) throws RestClientException;
 
-	public RelationshipData loadRelationship(long id) throws RestClientException;
+	public RelationshipData getRelationship(long id) throws RestClientException;
 
 	// public void saveNode(NodeData node) throws RestClientException;
 
@@ -54,6 +55,12 @@ public interface RestClient {
 
 	public void setProperty(PropertyContainerData data, String key, Object value) throws RestClientException;
 
-	public void removeProperty(PropertyContainerData data, String key) throws RestClientException;
+	public void deleteProperty(PropertyContainerData data, String key) throws RestClientException;
+
+	public IndexData getNodeIndex(String indexName) throws RestClientException;
+	
+	public IndexData getRelationshipIndex(String indexName) throws RestClientException;
+
+	public Map<String,IndexData> getNodeIndexNames();
 
 }

@@ -6,6 +6,7 @@ package org.neo4j.client.rest.client;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -70,20 +71,23 @@ public class RestClientImpl implements RestClient {
 		}
 	}
 
-	public String createNodeUri(long id) {
+	protected String createNodeUri(long id) {
 		return data.getNode() + "/" + Long.toString(id);
 	}
 
-	/**
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public String createRelationshipUri(long id) {
+	protected String createRelationshipUri(long id) {
 		/*
-		 * Why is relationship sent as part of the database data?
+		 * Why is relationship not sent as part of the database data?
 		 */
 		return uri.toString() + "/relationship/" + Long.toString(id);
+	}
+
+	protected String createRelationshipIndexUri(String name) {
+		return data.getRelationshipIndex() + "/" + name;
+	}
+
+	protected String createNodeIndexUri(String name) {
+		return data.getNodeIndex() + "/" + name;
 	}
 
 	private void loadDatabaseData() {
@@ -114,7 +118,7 @@ public class RestClientImpl implements RestClient {
 	}
 
 	@Override
-	public NodeData loadNode(long nodeId) throws RestClientException {
+	public NodeData getNode(long nodeId) throws RestClientException {
 		checkData();
 		String path = createNodeUri(nodeId);
 		HttpGet request = new HttpGet(path);
@@ -133,7 +137,7 @@ public class RestClientImpl implements RestClient {
 	}
 
 	@Override
-	public Collection<RelationshipData> loadNodeRelationships(NodeData nodeData) throws RestClientException {
+	public Collection<RelationshipData> getNodeRelationships(NodeData nodeData) throws RestClientException {
 		checkData();
 		try {
 			HttpGet request = new HttpGet(nodeData.getAll_relationships());
@@ -156,7 +160,7 @@ public class RestClientImpl implements RestClient {
 	}
 
 	@Override
-	public RelationshipData loadRelationship(long id) throws RestClientException {
+	public RelationshipData getRelationship(long id) throws RestClientException {
 		checkData();
 		String path = createRelationshipUri(id);
 		HttpGet request = new HttpGet(path);
@@ -198,23 +202,6 @@ public class RestClientImpl implements RestClient {
 		}
 	}
 
-//	@Override
-//	public void saveNode(NodeData node) throws RestClientException {
-//		HttpPost request = new HttpPost(node.getSelf());
-//		request.setHeader("Accept", "application/json");
-//		request.setHeader("Content-Type", "application/json");
-//		try {
-//			request.setEntity(new StringEntity(mapper.writeValueAsString(node)));
-//			HttpResponse response = httpclient.execute(request);
-//			EntityUtils.consume(response.getEntity());
-//			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-//				throw new RestClientException(response.getStatusLine().getReasonPhrase());
-//			}
-//		} catch (IOException e) {
-//			throw new RestClientException(e);
-//		}
-//	}
-
 	@Override
 	public void deleteRelationship(RelationshipData relationship) throws RestClientException {
 		HttpDelete request = new HttpDelete(relationship.getSelf());
@@ -232,12 +219,6 @@ public class RestClientImpl implements RestClient {
 		}
 
 	}
-
-//	@Override
-//	public void saveRelationship(RelationshipData relationship) {
-//		// TODO Auto-generated method stub
-//
-//	}
 
 	@Override
 	public RelationshipData createRelationship(NodeData start, NodeData end, String type) throws RestClientException {
@@ -329,13 +310,13 @@ public class RestClientImpl implements RestClient {
 		} catch (IOException e) {
 			throw new RestClientException(e);
 		}
-		 
+
 	}
 
 	@Override
-	public void removeProperty(PropertyContainerData container, String key) throws RestClientException {
+	public void deleteProperty(PropertyContainerData container, String key) throws RestClientException {
 		try {
-			String path = container.getSelf() + "/property/" + key ;
+			String path = container.getSelf() + "/property/" + key;
 			HttpDelete request = new HttpDelete(path);
 			request.setHeader("Accept", "application/json");
 			HttpResponse response = httpclient.execute(request);
@@ -346,5 +327,50 @@ public class RestClientImpl implements RestClient {
 		}
 	}
 
-	
+	@Override
+	public IndexData getNodeIndex(String indexName) throws RestClientException {
+		return getIndex(createNodeIndexUri(indexName));
+	}
+
+	private IndexData getIndex(String uri) throws RestClientException {
+		HttpResponse response = null;
+		try {
+			HttpGet request = new HttpGet(uri);
+			request.setHeader("Accept", "application/json");
+			response = httpclient.execute(request);
+			switch (response.getStatusLine().getStatusCode()) {
+			case HttpStatus.SC_OK:
+				IndexData index = mapper.readValue(response.getEntity().getContent(), IndexData.class);
+				index.setSelf(uri);
+				return index;
+			case HttpStatus.SC_NOT_FOUND:
+				return null;
+			default:
+				throw new RestClientException("Error getting node index " + uri + ". Error code "
+						+ response.getStatusLine().getStatusCode());
+			}
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		} finally {
+			if (response != null && response.getEntity() != null) {
+				try {
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					log.error("Problem consuming response entity.", e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public IndexData getRelationshipIndex(String indexName) throws RestClientException {
+		return getIndex(createRelationshipIndexUri(indexName));
+	}
+
+	@Override
+	public Map<String, IndexData> getNodeIndexNames() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
