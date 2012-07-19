@@ -1,4 +1,5 @@
-package org.neo4j.client.rest.impl;
+package org.neo4j.client.rest.client;
+
 
 public class RelationshipData extends PropertyContainerData {
 	

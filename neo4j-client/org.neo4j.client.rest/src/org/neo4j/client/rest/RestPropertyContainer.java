@@ -11,20 +11,18 @@ import org.neo4j.client.PropertyContainer;
  */
 public interface RestPropertyContainer extends PropertyContainer {
 	
+	/**
+	 * The database of this node or relationship.
+	 */
 	@Override
 	public RestGraphDatabase getGraphDatabase();
 	
-//	public boolean isDirty();
-//	
-//	public void setDirty(boolean dirty);
-//	
-//	public void save() throws RestClientException;
-//	
-//	public void load() throws RestClientException;
-//	
-//	public boolean isLoaded();
 	
-	public void refresh();
+	/**
+	 * Instructs the database to reload the properties with the values 
+	 * stored in the database. It will overwrite any values in this object.
+	 */
+	public void refresh() throws RestClientException;
 	
 	/**
 	 * The URI of this property container

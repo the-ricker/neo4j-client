@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.neo4j.client.rest.impl;
+package org.neo4j.client.rest.client;
 
 import java.io.IOException;
 import java.net.URI;
@@ -40,7 +40,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class RestClientImpl implements RestClient {
 
-	private Log log = LogFactory.getLog(RestClient.class);
+	private Log log = LogFactory.getLog(RestClientImpl.class);
 
 	private ObjectMapper mapper;
 	private HttpClient httpclient;
@@ -198,22 +198,22 @@ public class RestClientImpl implements RestClient {
 		}
 	}
 
-	@Override
-	public void saveNode(NodeData node) throws RestClientException {
-		HttpPost request = new HttpPost(node.getSelf());
-		request.setHeader("Accept", "application/json");
-		request.setHeader("Content-Type", "application/json");
-		try {
-			request.setEntity(new StringEntity(mapper.writeValueAsString(node)));
-			HttpResponse response = httpclient.execute(request);
-			EntityUtils.consume(response.getEntity());
-			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
-				throw new RestClientException(response.getStatusLine().getReasonPhrase());
-			}
-		} catch (IOException e) {
-			throw new RestClientException(e);
-		}
-	}
+//	@Override
+//	public void saveNode(NodeData node) throws RestClientException {
+//		HttpPost request = new HttpPost(node.getSelf());
+//		request.setHeader("Accept", "application/json");
+//		request.setHeader("Content-Type", "application/json");
+//		try {
+//			request.setEntity(new StringEntity(mapper.writeValueAsString(node)));
+//			HttpResponse response = httpclient.execute(request);
+//			EntityUtils.consume(response.getEntity());
+//			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+//				throw new RestClientException(response.getStatusLine().getReasonPhrase());
+//			}
+//		} catch (IOException e) {
+//			throw new RestClientException(e);
+//		}
+//	}
 
 	@Override
 	public void deleteRelationship(RelationshipData relationship) throws RestClientException {
@@ -233,11 +233,11 @@ public class RestClientImpl implements RestClient {
 
 	}
 
-	@Override
-	public void saveRelationship(RelationshipData relationship) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void saveRelationship(RelationshipData relationship) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public RelationshipData createRelationship(NodeData start, NodeData end, String type) throws RestClientException {

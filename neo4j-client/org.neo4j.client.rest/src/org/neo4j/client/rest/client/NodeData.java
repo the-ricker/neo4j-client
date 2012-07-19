@@ -1,7 +1,8 @@
 /**
  * 
  */
-package org.neo4j.client.rest.impl;
+package org.neo4j.client.rest.client;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

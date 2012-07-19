@@ -14,6 +14,7 @@ import org.neo4j.client.Relationship;
 import org.neo4j.client.RelationshipType;
 import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.RestNode;
+import org.neo4j.client.rest.client.NodeData;
 import org.neo4j.client.rest.util.PathUtil;
 import org.neo4j.client.rest.util.RelationshipUtil;
 

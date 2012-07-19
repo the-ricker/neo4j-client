@@ -46,5 +46,6 @@
 		<module>org.neo4j.client</module>
 		<module>org.neo4j.client.rest</module>
 		<module>org.neo4j.client.feature</module>
+		<module>org.neo4j.client.rest.test</module>
 	</modules>
 </project>

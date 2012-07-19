@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.neo4j.client.rest.impl;
+package org.neo4j.client.rest.client;
 
 import java.util.Map;
 

@@ -7,7 +7,7 @@ import org.neo4j.client.PropertyContainer;
 import org.neo4j.client.index.Index;
 import org.neo4j.client.index.IndexManager;
 import org.neo4j.client.index.RelationshipIndex;
-import org.neo4j.client.rest.impl.RestClient;
+import org.neo4j.client.rest.client.RestClient;
 
 public class RestIndexManagerImpl implements IndexManager {
 	

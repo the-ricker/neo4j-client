@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.neo4j.client.rest.impl;
+package org.neo4j.client.rest.client;
 
 import java.net.URI;
 import java.util.Collection;
@@ -10,9 +10,8 @@ import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
 
 /**
- * Handles the REST requests to the database server via HTTP. Most methods
- * return Future so that the caller can determine how long they wish to wait for
- * results.
+ * Handles the REST requests to the database server via HTTP. The methods accept
+ * and return beans.
  * 
  * @author Ricker
  * 
@@ -35,11 +34,12 @@ public interface RestClient {
 
 	public RelationshipData loadRelationship(long id) throws RestClientException;
 
-	public void saveNode(NodeData node) throws RestClientException;
+	// public void saveNode(NodeData node) throws RestClientException;
 
 	public void deleteNode(NodeData node) throws RestClientException;
 
-	public void saveRelationship(RelationshipData relationship) throws RestClientException;
+	// public void saveRelationship(RelationshipData relationship) throws
+	// RestClientException;
 
 	public void deleteRelationship(RelationshipData relationship) throws RestClientException;
 

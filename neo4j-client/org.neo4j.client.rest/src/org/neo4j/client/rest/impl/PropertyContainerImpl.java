@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.neo4j.client.PropertyContainer;
 import org.neo4j.client.rest.RestClientException;
 import org.neo4j.client.rest.RestGraphDatabase;
+import org.neo4j.client.rest.client.PropertyContainerData;
 
 /**
  * @author Ricker

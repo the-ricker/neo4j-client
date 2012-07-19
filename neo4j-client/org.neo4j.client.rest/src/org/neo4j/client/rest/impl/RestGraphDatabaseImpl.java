@@ -15,7 +15,6 @@ import java.util.WeakHashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.neo4j.client.Node;
-import org.neo4j.client.PropertyContainer;
 import org.neo4j.client.RelationshipType;
 import org.neo4j.client.index.IndexManager;
 import org.neo4j.client.rest.RestClientException;
@@ -23,6 +22,11 @@ import org.neo4j.client.rest.RestGraphDatabase;
 import org.neo4j.client.rest.RestNode;
 import org.neo4j.client.rest.RestPath;
 import org.neo4j.client.rest.RestRelationship;
+import org.neo4j.client.rest.client.NodeData;
+import org.neo4j.client.rest.client.PathData;
+import org.neo4j.client.rest.client.RelationshipData;
+import org.neo4j.client.rest.client.RestClient;
+import org.neo4j.client.rest.client.RestClientImpl;
 import org.neo4j.client.rest.index.impl.RestIndexManagerImpl;
 import org.neo4j.client.rest.traversal.RestTraversalDescription;
 import org.neo4j.client.rest.traversal.RestTraverser;
@@ -217,9 +221,9 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 		}
 	}
 
-	public void saveNode(RestNodeImpl node) throws RestClientException {
-		loader.saveNode(node.getData());
-	}
+//	public void saveNode(RestNodeImpl node) throws RestClientException {
+//		loader.saveNode(node.getData());
+//	}
 
 	public void deleteNode(RestNodeImpl node) throws RestClientException {
 		if (node != null && !node.isDeleted()) {
@@ -248,9 +252,9 @@ public class RestGraphDatabaseImpl implements RestGraphDatabase {
 		}
 	}
 
-	public void saveRelationship(RestRelationshipImpl relationship) throws RestClientException {
-		loader.saveRelationship(relationship.getData());
-	}
+//	public void saveRelationship(RestRelationshipImpl relationship) throws RestClientException {
+//		loader.saveRelationship(relationship.getData());
+//	}
 
 	public RestRelationshipImpl createRelationship(RestNodeImpl start, Node otherNode, RelationshipType type)
 			throws RestClientException {

@@ -2,6 +2,12 @@ package org.neo4j.client.rest;
 
 import org.neo4j.client.Relationship;
 
+/**
+ *  
+ *  
+ * @author Ricker
+ *
+ */
 public interface RestRelationship extends Relationship, RestPropertyContainer {
 
 	
@@ -11,10 +17,14 @@ public interface RestRelationship extends Relationship, RestPropertyContainer {
 	 */
 	public long getStartNodeId();
 
+	/**
+	 * The ID of the end node.
+	 * @return
+	 */
 	public long getEndNodeId();
 	
 	/**
-	 * True if the {@link #delete} method is called. 
+	 * True if the {@link #delete} method has been called. 
 	 */
 	public boolean isDeleted();
 

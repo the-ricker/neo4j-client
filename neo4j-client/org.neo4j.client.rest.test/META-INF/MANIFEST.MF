@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Neo4j Rest Client Test
+Bundle-SymbolicName: org.neo4j.client.rest.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Fragment-Host: org.neo4j.client.rest
+Require-Bundle: org.junit;bundle-version="4.10.0"
+
+
