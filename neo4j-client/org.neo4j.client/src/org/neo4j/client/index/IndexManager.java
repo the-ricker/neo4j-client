@@ -59,7 +59,7 @@ public interface IndexManager {
 	 *            the name of the node index.
 	 * @return the {@link Index} corresponding to the {@code indexName}.
 	 */
-	Index<Node> forNodes(String indexName);
+	Index<? extends Node> forNodes(String indexName);
 
 	/**
 	 * Returns the names of all existing {@link Node} indexes. Those names can
@@ -98,7 +98,7 @@ public interface IndexManager {
 	 *            the name of the node index.
 	 * @return the {@link Index} corresponding to the {@code indexName}.
 	 */
-	RelationshipIndex forRelationships(String indexName);
+	Index<? extends Relationship> forRelationships(String indexName);
 
 	/**
 	 * Returns the names of all existing {@link Relationship} indexes. Those

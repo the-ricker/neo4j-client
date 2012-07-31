@@ -6,6 +6,7 @@ package org.neo4j.client.rest.client;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -82,10 +83,22 @@ public class RestClientImpl implements RestClient {
 		return uri.toString() + "/relationship/" + Long.toString(id);
 	}
 
+	/**
+	 * 
+	 * @param name
+	 *            the name of the index
+	 * @return a full URI to the index
+	 */
 	protected String createRelationshipIndexUri(String name) {
 		return data.getRelationshipIndex() + "/" + name;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 *            the name of the index
+	 * @return a full URI to the index
+	 */
 	protected String createNodeIndexUri(String name) {
 		return data.getNodeIndex() + "/" + name;
 	}
@@ -167,7 +180,7 @@ public class RestClientImpl implements RestClient {
 		request.setHeader("Accept", "application/json");
 		try {
 			HttpResponse response = httpclient.execute(request);
-			if (response.getStatusLine().getStatusCode() == 404) {
+			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_NOT_FOUND) {
 				return null;
 			}
 			RelationshipData relationshipData = mapper.readValue(response.getEntity().getContent(),
@@ -368,9 +381,174 @@ public class RestClientImpl implements RestClient {
 	}
 
 	@Override
-	public Map<String, IndexData> getNodeIndexNames() {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, IndexData> getNodeIndexNames() throws RestClientException {
+		return getIndexNames(data.getNodeIndex());
+	}
+
+	@Override
+	public Map<String, IndexData> getRelationshipIndexNames() throws RestClientException {
+		return getIndexNames(data.getRelationshipIndex());
+	}
+
+	private Map<String, IndexData> getIndexNames(String uri) throws RestClientException {
+		HttpResponse response = null;
+		try {
+			HttpGet request = new HttpGet(uri);
+			request.setHeader("Accept", "application/json");
+			response = httpclient.execute(request);
+			Map<String, IndexData> indexes = mapper.readValue(response.getEntity().getContent(),
+					new TypeReference<Map<String, IndexData>>() {
+					});
+			return indexes;
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		} finally {
+			if (response != null && response.getEntity() != null) {
+				try {
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					log.error("Problem consuming response entity.", e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public IndexData createNodeIndex(String indexName) throws RestClientException {
+		return createIndex(data.getNodeIndex(), indexName);
+	}
+
+	@Override
+	public IndexData createRelationshipIndex(String indexName) throws RestClientException {
+		return createIndex(data.getRelationshipIndex(), indexName);
+	}
+
+	private IndexData createIndex(String uri, String name) throws RestClientException {
+		HttpResponse response = null;
+		try {
+			HttpPost request = new HttpPost(uri);
+			request.setHeader("Accept", "application/json");
+			request.setHeader("Content-Type", "application/json");
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("name", name);
+			request.setEntity(new StringEntity(mapper.writeValueAsString(props)));
+			response = httpclient.execute(request);
+			switch (response.getStatusLine().getStatusCode()) {
+			case HttpStatus.SC_CREATED:
+				IndexData index = mapper.readValue(response.getEntity().getContent(), IndexData.class);
+				index.setSelf(uri);
+				return index;
+			default:
+				throw new RestClientException("Error creating node index " + uri + ". Error code "
+						+ response.getStatusLine().getStatusCode());
+			}
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		} finally {
+			if (response != null && response.getEntity() != null) {
+				try {
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					log.error("Problem consuming response entity.", e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void addNodeIndex(String name, String nodeUri, String key, Object value) throws RestClientException {
+		addIndex(createNodeIndexUri(name), nodeUri, key, value);
+	}
+
+	@Override
+	public void addRelationshipIndex(String name, String relationshipUri, String key, Object value)
+			throws RestClientException {
+		addIndex(createRelationshipIndexUri(name), relationshipUri, key, value);
+	}
+
+	private void addIndex(String uri, String entityUri, String key, Object value) throws RestClientException {
+		HttpResponse response = null;
+		try {
+			HttpPost request = new HttpPost(uri);
+			request.setHeader("Accept", "application/json");
+			request.setHeader("Content-Type", "application/json");
+			Map<String, Object> props = new HashMap<String, Object>();
+			props.put("key", key);
+			props.put("value", value);
+			props.put("uri", entityUri);
+			request.setEntity(new StringEntity(mapper.writeValueAsString(props)));
+			response = httpclient.execute(request);
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_CREATED) {
+				throw new RestClientException("Error adding to index: " + response.getStatusLine().getReasonPhrase());
+			}
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		} finally {
+			if (response != null && response.getEntity() != null) {
+				try {
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					log.error("Problem consuming response entity.", e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void removeNodeIndex(String name, long nodeId, String key, Object value) throws RestClientException {
+		removeIndex(createNodeIndexUri(name), nodeId, key, value);
+	}
+
+	@Override
+	public void removeRelationshipIndex(String name, long id, String key, Object value) throws RestClientException {
+		removeIndex(createRelationshipIndexUri(name), id, key, value);
+	}
+
+	private void removeIndex(String baseUri, long id, String key, Object value) throws RestClientException {
+		HttpResponse response = null;
+		try {
+			StringBuilder buf = new StringBuilder();
+			buf.append(baseUri);
+			if (key != null) {
+				buf.append("/");
+				buf.append(key);
+			}
+			if (value != null) {
+				buf.append("/");
+				buf.append(value.toString());
+			}
+			if (id != -1) {
+				buf.append("/");
+				buf.append(Long.toString(id));
+			}
+			HttpDelete request = new HttpDelete(buf.toString());
+			request.setHeader("Accept", "application/json");
+			response = httpclient.execute(request);
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_NO_CONTENT) {
+				throw new RestClientException("Error removing index: " + response.getStatusLine().getReasonPhrase());
+			}
+		} catch (IOException e) {
+			throw new RestClientException(e);
+		} finally {
+			if (response != null && response.getEntity() != null) {
+				try {
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					log.error("Problem consuming response entity.", e);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public void deleteNodeIndex(String name) throws RestClientException {
+		removeIndex(createNodeIndexUri(name), -1, null, null);
+	}
+
+	@Override
+	public void deleteRelationshipIndex(String name) throws RestClientException {
+		removeIndex(createRelationshipIndexUri(name), -1, null, null);
 	}
 
 }

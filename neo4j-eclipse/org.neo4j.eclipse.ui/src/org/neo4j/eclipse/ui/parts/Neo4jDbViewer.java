@@ -3,40 +3,36 @@
  */
 package org.neo4j.eclipse.ui.parts;
 
-import javax.inject.Inject;
 
-import org.eclipse.e4.ui.di.Focus;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.neo4j.client.rest.RestGraphDatabaseFactory;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.zest.core.viewers.GraphViewer;
 
 
 /**
  * @author Ricker
  *
  */
-public class Neo4jDbViewer {
-	
+public class Neo4jDbViewer extends ViewPart {
 
-	@Inject
-	private RestGraphDatabaseFactory dbFactory;
+	private GraphViewer graph;
 	
-	@Inject
-	public void init(Composite parent) {
-		Label label = new Label(parent, SWT.NONE);
-		label.setText("Eclipse 4");
-	}
 	
+	@Override
+	public void createPartControl(Composite parent) {
+		 graph = new GraphViewer(parent, SWT.NONE);
 
-	
-	@Focus
-	public void setFocus() {
-		// TODO Auto-generated method stub
+
 		
 	}
-	
 
+	@Override
+	public void setFocus() {
+		graph.getControl().setFocus();
+	}
+	
 
 
 }

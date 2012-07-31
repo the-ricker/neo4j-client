@@ -19,48 +19,58 @@ import org.neo4j.client.rest.traversal.impl.TraversalDescriptionData;
  */
 public interface RestClient {
 
-	public URI getUri();
+	URI getUri();
 
-	public void setUri(URI uri);
+	void setUri(URI uri);
 
-	public long getReferenceNodeId() throws RestClientException;
+	long getReferenceNodeId() throws RestClientException;
 
-	public NodeData createNode() throws RestClientException;
+	NodeData createNode() throws RestClientException;
 
-	public RelationshipData createRelationship(NodeData start, NodeData end, String type) throws RestClientException;
+	RelationshipData createRelationship(NodeData start, NodeData end, String type) throws RestClientException;
 
-	public NodeData getNode(long nodeId) throws RestClientException;
+	NodeData getNode(long nodeId) throws RestClientException;
 
-	public Collection<RelationshipData> getNodeRelationships(NodeData nodeData) throws RestClientException;
+	Collection<RelationshipData> getNodeRelationships(NodeData nodeData) throws RestClientException;
 
-	public RelationshipData getRelationship(long id) throws RestClientException;
+	RelationshipData getRelationship(long id) throws RestClientException;
 
-	// public void saveNode(NodeData node) throws RestClientException;
+	void deleteNode(NodeData node) throws RestClientException;
 
-	public void deleteNode(NodeData node) throws RestClientException;
+	void deleteRelationship(RelationshipData relationship) throws RestClientException;
 
-	// public void saveRelationship(RelationshipData relationship) throws
-	// RestClientException;
+	Collection<NodeData> traverseNodes(NodeData node, TraversalDescriptionData description) throws RestClientException;
 
-	public void deleteRelationship(RelationshipData relationship) throws RestClientException;
-
-	public Collection<NodeData> traverseNodes(NodeData node, TraversalDescriptionData description)
+	Collection<RelationshipData> traverseRelationships(NodeData node, TraversalDescriptionData description)
 			throws RestClientException;
 
-	public Collection<RelationshipData> traverseRelationships(NodeData node, TraversalDescriptionData description)
-			throws RestClientException;
+	Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description) throws RestClientException;
 
-	public Collection<PathData> traversePaths(NodeData node, TraversalDescriptionData description)
-			throws RestClientException;
+	void setProperty(PropertyContainerData data, String key, Object value) throws RestClientException;
 
-	public void setProperty(PropertyContainerData data, String key, Object value) throws RestClientException;
+	void deleteProperty(PropertyContainerData data, String key) throws RestClientException;
 
-	public void deleteProperty(PropertyContainerData data, String key) throws RestClientException;
+	IndexData getNodeIndex(String indexName) throws RestClientException;
 
-	public IndexData getNodeIndex(String indexName) throws RestClientException;
-	
-	public IndexData getRelationshipIndex(String indexName) throws RestClientException;
+	IndexData getRelationshipIndex(String indexName) throws RestClientException;
 
-	public Map<String,IndexData> getNodeIndexNames();
+	Map<String, IndexData> getNodeIndexNames() throws RestClientException;
 
+	Map<String, IndexData> getRelationshipIndexNames() throws RestClientException;
+
+	IndexData createNodeIndex(String indexName) throws RestClientException;
+
+	IndexData createRelationshipIndex(String indexName) throws RestClientException;
+
+	void addNodeIndex(String name, String nodeUri, String key, Object value) throws RestClientException;
+
+	void removeNodeIndex(String name, long nodeId, String key, Object value) throws RestClientException;
+
+	void deleteNodeIndex(String name) throws RestClientException;
+
+	void addRelationshipIndex(String name, String relationshipUri, String key, Object value) throws RestClientException;
+
+	void removeRelationshipIndex(String name, long id, String key, Object value) throws RestClientException;
+
+	void deleteRelationshipIndex(String name) throws RestClientException;
 }

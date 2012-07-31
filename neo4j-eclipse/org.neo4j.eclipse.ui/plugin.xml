@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-	<extension id="modelContribution"
-		point="org.eclipse.e4.workbench.model">
-		<fragment uri="fragment.e4xmi">
-		</fragment>
-	</extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.neo4j.eclipse.ui.parts.Neo4jDbViewer"
+            icon="icons/obj16/neo-16.png"
+            id="org.neo4j.eclipse.ui.parts.Neo4jDbViewer"
+            name="Neo4j Database Viewer"
+            restorable="true">
+      </view>
+   </extension>
+
 </plugin>
